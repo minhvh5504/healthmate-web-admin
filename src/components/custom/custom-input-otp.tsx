@@ -38,12 +38,12 @@ const customInputOTPSlotVariants = cva(
       {
         variant: 'default',
         isActive: true,
-        className: 'border-primary', // Chỉ đổi màu border
+        className: 'border-primary', // Only change border color
       },
       {
         variant: 'destructive',
         isActive: true,
-        className: 'border-destructive', // Giữ màu border khi active
+        className: 'border-destructive', // Keep border color when active
       },
     ],
     defaultVariants: {

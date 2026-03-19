@@ -37,7 +37,7 @@ export default function NavBar() {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as Node;
 
-      // Nếu click vào menu hoặc nút mở menu → không đóng
+      // Don't close if clicking inside the menu, the toggle button, or the dropdown content
       if (
         mobileMenuRef.current?.contains(target) ||
         mobileButtonRef.current?.contains(target) ||

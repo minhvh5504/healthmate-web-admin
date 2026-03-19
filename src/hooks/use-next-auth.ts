@@ -47,7 +47,10 @@ export function useNextAuth() {
   // Logout
   const logout = async () => {
     try {
-      await authService.logout();
+      const refreshToken = (session as any)?.refreshToken;
+      if (refreshToken) {
+        await authService.logout(refreshToken);
+      }
     } catch (e) {
       console.error('Logout error:', e);
     }

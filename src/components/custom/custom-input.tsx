@@ -3,7 +3,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 
 import { cn } from '@/lib/utils';
 
-// 1. Import Input gốc của Shadcn và đổi tên
+// 1. Import original Shadcn Input and rename it
 import { Input as ShadcnInput } from '@/components/ui/input';
 
 const customInputVariants = cva(
@@ -11,7 +11,7 @@ const customInputVariants = cva(
   {
     variants: {
       variant: {
-        default: 'border-input focus-visible:ring-[#238C98B2] text-[#1A5F6A]',
+        default: 'border-input focus-visible:ring-[#434B94] focus-visible:border-[#434B94] text-slate-900',
         destructive:
           'border-destructive text-destructive placeholder:text-destructive/60 focus-visible:ring-destructive',
         success: 'border-green-600 focus-visible:ring-green-600',

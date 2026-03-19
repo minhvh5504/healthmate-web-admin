@@ -1,14 +1,14 @@
 {
   "stats": {
     "totalUser": "Tổng người dùng",
-    "totalHotelBooking": "Tổng lượt đặt phòng",
+    "totalHotelBooking": "Tổng dịch vụ",
     "totalBooking": "Tổng doanh thu",
     "totalPending": "Đang chờ xử lý",
     "upFromYesterday": "Tăng so với hôm qua",
     "downFromYesterday": "Giảm so với hôm qua"
   },
   "sections": {
-    "hotelStatistics": "Thống kê khách sạn",
+    "hotelStatistics": "Thống kê dịch vụ",
     "bookingsDetails": "Chi tiết đặt phòng"
   },
   "periods": {
@@ -24,8 +24,8 @@
   },
   "sidebar": {
     "dashboard": "Bảng điều khiển",
-    "manageHotels": "Quản lý khách sạn",
-    "manageBookings": "Quản lý đặt phòng",
+    "manageHotels": "Quản lý dịch vụ",
+    "manageBookings": "Quản lý lượt dịch vụ",
     "logout": "Đăng xuất"
   },
   "status": {
@@ -39,12 +39,12 @@
     "cancelled": "Đã hủy"
   },
   "table": {
-    "noBookings": "Không có lượt đặt phòng gần đây",
+    "noBookings": "Không có lịch hẹn gần đây",
     "stt": "STT",
-    "name": "Khách sạn",
+    "name": "Phòng khám",
     "price": "Giá",
     "dateTime": "Ngày đặt",
-    "address": "Địa chỉ Khách sạn",
+    "address": "Địa chỉ phòng khám",
     "status": "Trạng thái"
   },
   "common": {

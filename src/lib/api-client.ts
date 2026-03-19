@@ -44,7 +44,7 @@ const axiosInstance: AxiosInstance = axios.create({
   withCredentials: true,
 });
 
-/** Request: gắn Bearer từ NextAuth session */
+/** Request: attach Bearer token from NextAuth session */
 axiosInstance.interceptors.request.use(
   async (config: InternalAxiosRequestConfig) => {
     const session = await getSession();
@@ -57,28 +57,27 @@ axiosInstance.interceptors.request.use(
   error => Promise.reject(error)
 );
 
-/** Response: 401 -> xếp hàng đợi, đợi refresh xong -> retry 1 lần */
+/** Response: 401 -> join queue, wait for refresh -> retry once */
 axiosInstance.interceptors.response.use(
   response => response,
   async (error: AxiosError) => {
     const original = (error.config ?? {}) as AxiosRequestConfig & { _retry?: boolean };
 
     // debugger;
-    // Nếu không phải 401 hoặc đã retry 1 lần -> throw luôn
+    // If not 401 or already retried once -> throw error
     if (error.response?.status !== 401 || original._retry) {
       return Promise.reject(error);
     }
 
-    // Whitelist: các endpoint không cần auth, không retry khi 401
+    // Whitelist: endpoints that don't need auth, don't retry on 401
     const publicEndpoints = [
-      '/auth/admin/refresh-token',
-      '/auth/admin/login',
-      '/auth/admin/register',
-      '/auth/admin/forgot-password',
-      '/auth/admin/verify',
-      '/auth/admin/resend-code',
-      '/auth/admin/check-validcode',
-      '/auth/admin/reset-password'
+      '/admin/auth/refresh',
+      '/admin/auth/login',
+      '/admin/auth/register',
+      '/auth/send-reset-password',
+      '/admin/auth/verify-email',
+      '/admin/auth/resend-otp',
+      '/auth/reset-password'
     ];
     if (publicEndpoints.some(endpoint => original.url?.includes(endpoint))) {
       return Promise.reject(error);
@@ -87,7 +86,7 @@ axiosInstance.interceptors.response.use(
     original._retry = true;
 
     if (isRefreshing) {
-      // Join hàng đợi
+      // Join the queue
       return new Promise((resolve, reject) => {
         failedQueue.push({ resolve, reject, config: original });
       });
@@ -96,13 +95,13 @@ axiosInstance.interceptors.response.use(
     try {
       isRefreshing = true;
 
-      // Cách đúng với NextAuth: chỉ cần gọi lại getSession()
-      // NextAuth sẽ tự chạy jwt() -> refreshAccessToken() nếu đến hạn
+      // Proper way with NextAuth: just call getSession()
+      // NextAuth will automatically run jwt() -> refreshAccessToken() if expired
       const newSession = await getSession();
       const newToken = (newSession as Session | null)?.accessToken || null;
       console.log('newToken', newSession);
 
-      // Báo cho queue
+      // Notify the queue
       processQueue(null, newToken);
 
       if (!newToken) {
@@ -110,7 +109,7 @@ axiosInstance.interceptors.response.use(
         return Promise.reject(error);
       }
 
-      // Retry request gây 401
+      // Retry request that caused 401
       const headers = { ...(original.headers ?? {}) };
       headers.Authorization = `Bearer ${newToken}`;
       original.headers = headers;
@@ -145,7 +144,7 @@ export async function apiClient<T>(
       return data.data as T;
     }
 
-    // Raw response (không có wrapper)
+    // Raw response (no wrapper)
     return data as T;
   } catch (error: unknown) {
     // Extract error message from backend response

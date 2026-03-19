@@ -4,99 +4,45 @@ import * as React from 'react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Eye, EyeOff, Mail } from 'lucide-react';
-import Link from 'next/link';
+import { Eye, EyeOff, Mail, Lock } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { z } from 'zod';
-import { signIn } from 'next-auth/react';
 import { useNextAuth } from '@/hooks/use-next-auth';
 import { useTranslation } from 'react-i18next';
+import Image from 'next/image';
 
 import { getPasswordSchema } from '@/lib/validators';
-import { otpStorage } from '@/lib/otp-storage';
-import { authService } from '@/services/auth-service';
-import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
-import { CustomButton } from '@/components/custom/custom-button';
-import { toast } from 'sonner';
+import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/button';
 import { CustomInput } from '@/components/custom/custom-input';
-import { CustomCheckbox } from '@/components/custom/custom-checkbox';
 import Loading from '@/components/custom/custom-loading';
-import Image from 'next/image';
-import { BackButton } from '@/components/custom/back-button';
-import { customSonner } from '@/components/custom/cusrom-sonner';
+import { customSonner } from '@/components/custom/custom-sonner';
 
 export default function LoginForm() {
   const [showPw, setShowPw] = useState(false);
   const router = useRouter();
   const { login, isLoading } = useNextAuth();
-  const [googleLoading, setGoogleLoading] = useState(false);
-  const { t, i18n } = useTranslation('auth');
+  const { t } = useTranslation('auth');
 
   const loginSchema = React.useMemo(() => {
     return z.object({
       username: z.string()
-        .min(1, { message: t('validation.usernameRequired') })
-        .refine((val) => {
-          const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
-          const isUsername = val.length >= 3;
-          return isEmail || isUsername;
-        }, { message: t('validation.invalidUsernameOrEmail') }),
+        .min(1, { message: t('validation.usernameRequired') }),
       password: getPasswordSchema(),
-      remember: z.boolean().catch(false),
     });
-  }, [i18n.language, t]);
+  }, [t]);
 
   const form = useForm({
     resolver: zodResolver(loginSchema),
-    mode: 'onSubmit' as const,
-    reValidateMode: 'onSubmit' as const,
-    defaultValues: { username: '', password: '', remember: false },
+    defaultValues: { username: '', password: '' },
   });
 
-  type LoginFormValues = z.infer<typeof loginSchema>;
-
-  const lockRef = React.useRef(false);
-
-  async function onSubmit(values: LoginFormValues) {
-    if (lockRef.current) return;
-    lockRef.current = true;
-
+  async function onSubmit(values: z.infer<typeof loginSchema>) {
     try {
       const result = await login(values.username, values.password);
 
       if (result?.error) {
-        if (result.error === 'User not verified') {
-          customSonner({
-            title: 'Info',
-            description: t('login.otpRequired'),
-            variant: 'info',
-          });
-          const otpResult = await authService.resendCode({
-            email: values.username,
-          });
-
-          if (!otpResult.ok) {
-            customSonner({
-              title: 'Error',
-              description: otpResult.message || t('login.failed'),
-              variant: 'destructive',
-            });
-            return;
-          }
-
-          otpStorage.set({
-            phone: values.username,
-            purpose: 'register',
-            tempData: {
-              password: values.password,
-            },
-          });
-          router.push('/otp');
-          return;
-        }
-
         customSonner({
           title: 'Error',
           description: result.error,
@@ -118,124 +64,112 @@ export default function LoginForm() {
         description: errorMessage,
         variant: 'destructive',
       });
-      // toast.error(errorMessage);
-    } finally {
-      lockRef.current = false;
     }
   }
 
   return (
     <>
-      <Loading loading={form.formState.isSubmitting || isLoading || googleLoading} />
-      <div className="mx-auto w-full max-w-sm">
-        <h1 className="mb-2 text-4xl font-bold text-[#238C98]">
-          {t('login.title')}
-        </h1>
-        <div className="mb-6 text-[#1A5F6A]">
-          {t('login.subtitle')}
+      <Loading loading={form.formState.isSubmitting || isLoading} />
+
+      <div className="flex w-full flex-col items-center">
+        {/* Logo Section - Standard SVG usage */}
+        <div className="mb-6 flex w-full justify-center">
+          <div className="drop-shadow-[0_10px_20px_rgba(59,130,246,0.3)] animate-in fade-in zoom-in duration-700">
+            <Image
+              src="/logo.svg"
+              alt="Health Mate Logo"
+              width={64}
+              height={64}
+              priority
+              className="rounded-[16px]"
+            />
+          </div>
+        </div>
+
+        {/* Title & Subtitle */}
+        <div className="mb-10 w-full text-center">
+          <h1 className="mb-2 text-3xl font-extrabold tracking-tight text-slate-900">
+            Health Mate
+          </h1>
+          <p className="text-[15px] font-semibold text-[#7C8BA1]">
+            {t('login.subtitle')}
+          </p>
         </div>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            {/* Email or Username */}
+          <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6">
+            {/* Email Field */}
             <FormField
               control={form.control}
               name="username"
               render={({ field }) => (
-                <FormItem>
-                  <Label htmlFor="username" className="text-[#5C6169]">
+                <FormItem className="space-y-1">
+                  <Label htmlFor="username" className="text-[13px] font-bold text-slate-600">
                     {t('login.username')}
                   </Label>
                   <FormControl>
-                    <CustomInput
-                      id="username"
-                      type="text"
-                      placeholder="joyer@example.com"
-                      autoComplete="username"
-                      {...field}
-                    />
+                    <div className="relative group w-full">
+                      <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-slate-500 transition-colors" size={18} />
+                      <CustomInput
+                        id="username"
+                        type="text"
+                        placeholder="name@example.com"
+                        className="h-14 pl-12 pr-4 rounded-2xl border-slate-300 bg-slate-50/50 focus:bg-white focus:border-[#434B94] focus:ring-1 focus:ring-[#434B94]/20 transition-all text-[15px] placeholder:text-slate-300"
+                        {...field}
+                      />
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
 
-            {/* Password */}
+            {/* Password Field */}
             <FormField
               control={form.control}
               name="password"
               render={({ field }) => (
-                <FormItem>
-                  <Label htmlFor="password" className="text-[#5C6169]">
+                <FormItem className="space-y-1">
+                  <Label htmlFor="password" className="text-[13px] font-bold text-slate-600">
                     {t('login.password')}
                   </Label>
-                  <div className="relative">
-                    <FormControl>
+                  <FormControl>
+                    <div className="relative group w-full">
+                      <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-slate-500 transition-colors" size={18} />
                       <CustomInput
                         id="password"
                         type={showPw ? 'text' : 'password'}
                         placeholder="••••••••"
-                        autoComplete="current-password"
+                        className="h-14 pl-12 pr-12 rounded-2xl border-slate-300 bg-slate-50/50 focus:bg-white focus:border-[#434B94] focus:ring-1 focus:ring-[#434B94]/20 transition-all text-[15px] placeholder:text-slate-300"
                         {...field}
                       />
-                    </FormControl>
-                    <button
-                      type="button"
-                      onClick={() => setShowPw(v => !v)}
-                      className="absolute right-2 top-1/2 -translate-y-1/2 rounded-md p-1 text-muted-foreground hover:text-foreground"
-                      aria-label={showPw ? 'Hide password' : 'Show password'}
-                    >
-                      {showPw ? <Eye size={18} /> : <EyeOff size={18} />}
-                    </button>
-                  </div>
+                      <button
+                        type="button"
+                        onClick={() => setShowPw(v => !v)}
+                        className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 hover:text-slate-500 transition-colors"
+                      >
+                        {showPw ? <Eye size={18} /> : <EyeOff size={18} />}
+                      </button>
+                    </div>
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
 
-            {/* Remember + Forgot password */}
-            <div className="flex items-center justify-between">
-              <FormField
-                control={form.control}
-                name="remember"
-                render={({ field }) => (
-                  <div className="flex items-center gap-2">
-                    <CustomCheckbox
-                      id="remember"
-                      checked={field.value as boolean}
-                      onCheckedChange={(checked) => field.onChange(checked as boolean)}
-                    />
-                    <Label htmlFor="remember" className="font-normal">
-                      {t('login.remember')}
-                    </Label>
-                  </div>
-                )}
-              />
-              <CustomButton variant="link">
-                <Link href="/forgot-password">{t('login.forgotPassword')}</Link>
-              </CustomButton>
+            {/* Login Button */}
+            <div className="pt-4">
+              <Button
+                variant="default"
+                type="submit"
+                className="h-14 w-full rounded-2xl bg-[#0f172a] text-[16px] font-bold text-white hover:bg-[#1e293b] active:scale-[0.98] transition-all shadow-lg shadow-slate-200"
+                disabled={form.formState.isSubmitting || isLoading}
+              >
+                {t('login.loginButton')}
+              </Button>
             </div>
-
-            {/* Submit */}
-            <CustomButton
-              variant="default"
-              type="submit"
-              className="mt-6 w-full font-semibold"
-              disabled={form.formState.isSubmitting || lockRef.current || isLoading}
-            >
-              {form.formState.isSubmitting || isLoading ? 'Processing...' : t('login.loginButton')}
-            </CustomButton>
-
-
           </form>
         </Form>
-
-        <div className="mt-4 text-center text-base text-[#1A5F6A]">
-          {t('login.noAccount')}{' '}
-          <CustomButton variant="link" className="p-1 text-base">
-            <Link href="/register">{t('login.signUp')}</Link>
-          </CustomButton>
-        </div>
       </div>
     </>
   );

@@ -1,15 +1,15 @@
 {
   "stats": {
     "totalUser": "Total User",
-    "totalHotelBooking": "Total Hotel Booking",
+    "totalHotelBooking": "Total Services",
     "totalBooking": "Total Booking",
     "totalPending": "Total Pending",
     "upFromYesterday": "Up from yesterday",
     "downFromYesterday": "Down from yesterday"
   },
   "sections": {
-    "hotelStatistics": "Hotel Statistics",
-    "bookingsDetails": "Bookings Details"
+    "hotelStatistics": "Service Statistics",
+    "bookingsDetails": "Appointment Details"
   },
   "periods": {
     "daily": "Daily",
@@ -24,8 +24,8 @@
   },
   "sidebar": {
     "dashboard": "Dashboard",
-    "manageHotels": "Manage Hotels",
-    "manageBookings": "Manage Bookings",
+    "manageHotels": "Manage Services",
+    "manageBookings": "Manage Appointments",
     "logout": "Logout"
   },
   "status": {
@@ -39,12 +39,12 @@
     "cancelled": "Cancelled"
   },
   "table": {
-    "noBookings": "No recent hotel bookings",
+    "noBookings": "No recent appointments",
     "stt": "STT",
-    "name": "Hotel",
+    "name": "Clinic",
     "price": "Price",
     "dateTime": "Booked At",
-    "address": "Hotel Address",
+    "address": "Clinic Address",
     "status": "Status"
   },
   "common": {
