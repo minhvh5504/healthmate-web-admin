@@ -1,0 +1,53 @@
+{
+  "stats": {
+    "totalUser": "Tổng người dùng",
+    "totalHotelBooking": "Tổng lượt đặt phòng",
+    "totalBooking": "Tổng doanh thu",
+    "totalPending": "Đang chờ xử lý",
+    "upFromYesterday": "Tăng so với hôm qua",
+    "downFromYesterday": "Giảm so với hôm qua"
+  },
+  "sections": {
+    "hotelStatistics": "Thống kê khách sạn",
+    "bookingsDetails": "Chi tiết đặt phòng"
+  },
+  "periods": {
+    "daily": "Hàng ngày",
+    "weekly": "Hàng tuần",
+    "monthly": "Hàng tháng",
+    "yearly": "Hàng năm"
+  },
+  "chart": {
+    "errorTitle": "Không thể tải dữ liệu biểu đồ",
+    "errorSubtitle": "Vui lòng thử lại sau",
+    "noData": "Không có dữ liệu"
+  },
+  "sidebar": {
+    "dashboard": "Bảng điều khiển",
+    "manageHotels": "Quản lý khách sạn",
+    "manageBookings": "Quản lý đặt phòng",
+    "logout": "Đăng xuất"
+  },
+  "status": {
+    "active": "Hoạt động",
+    "pending_payment": "Chờ thanh toán",
+    "payment_failed": "Thanh toán lỗi",
+    "pending_assignment": "Chờ phân công",
+    "confirmed": "Đã xác nhận",
+    "in_progress": "Đang thực hiện",
+    "completed": "Hoàn thành",
+    "cancelled": "Đã hủy"
+  },
+  "table": {
+    "noBookings": "Không có lượt đặt phòng gần đây",
+    "stt": "STT",
+    "name": "Khách sạn",
+    "price": "Giá",
+    "dateTime": "Ngày đặt",
+    "address": "Địa chỉ Khách sạn",
+    "status": "Trạng thái"
+  },
+  "common": {
+    "admin": "Quản trị viên"
+  }
+}

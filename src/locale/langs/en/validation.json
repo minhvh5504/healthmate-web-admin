@@ -1,0 +1,31 @@
+{
+  "name": {
+    "tooShort": "Name is too short.",
+    "tooLong": "Name is too long."
+  },
+  "email": {
+    "invalid": "Invalid email address."
+  },
+  "password": {
+    "noWhitespace": "Password cannot contain whitespace.",
+    "minLength": "Password must be at least 8 characters.",
+    "tooLong": "Password is too long.",
+    "requireLowercase": "Password must contain at least one lowercase letter.",
+    "requireUppercase": "Password must contain at least one uppercase letter.",
+    "requireNumber": "Password must contain at least one number.",
+    "requireSpecial": "Password must contain at least one special character.",
+    "notMatch": "Passwords do not match."
+  },
+  "phone": {
+    "minLength": "Phone number must be 9–11 characters.",
+    "tooLong": "Phone number is too long.",
+    "invalidDigits": "Phone number must contain 9–11 digits.",
+    "invalidPrefix": "Phone number must start with 0 or 84."
+  },
+  "otp": {
+    "length": "Code must be 6 digits.",
+    "digitsOnly": "Code must contain only digits."
+  },
+  "usernameRequired": "Please enter email or username.",
+  "invalidUsernameOrEmail": "Invalid email or username."
+}

@@ -1,0 +1,31 @@
+{
+  "name": {
+    "tooShort": "Tên quá ngắn.",
+    "tooLong": "Tên quá dài."
+  },
+  "email": {
+    "invalid": "Địa chỉ email không hợp lệ."
+  },
+  "password": {
+    "noWhitespace": "Mật khẩu không được chứa khoảng trắng.",
+    "minLength": "Mật khẩu phải có ít nhất 8 ký tự.",
+    "tooLong": "Mật khẩu quá dài.",
+    "requireLowercase": "Mật khẩu phải chứa ít nhất một chữ cái thường.",
+    "requireUppercase": "Mật khẩu phải chứa ít nhất một chữ cái hoa.",
+    "requireNumber": "Mật khẩu phải chứa ít nhất một số.",
+    "requireSpecial": "Mật khẩu phải chứa ít nhất một ký tự đặc biệt.",
+    "notMatch": "Mật khẩu không khớp."
+  },
+  "phone": {
+    "minLength": "Số điện thoại phải có 9-11 ký tự.",
+    "tooLong": "Số điện thoại quá dài.",
+    "invalidDigits": "Số điện thoại phải chứa 9-11 chữ số.",
+    "invalidPrefix": "Số điện thoại phải bắt đầu bằng 0 hoặc 84."
+  },
+  "otp": {
+    "length": "Mã phải có 6 chữ số.",
+    "digitsOnly": "Mã chỉ được chứa chữ số."
+  },
+  "usernameRequired": "Vui lòng nhập email hoặc tên đăng nhập.",
+  "invalidUsernameOrEmail": "Email hoặc tên đăng nhập không hợp lệ."
+}

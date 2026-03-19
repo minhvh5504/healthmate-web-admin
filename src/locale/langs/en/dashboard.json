@@ -1,0 +1,53 @@
+{
+  "stats": {
+    "totalUser": "Total User",
+    "totalHotelBooking": "Total Hotel Booking",
+    "totalBooking": "Total Booking",
+    "totalPending": "Total Pending",
+    "upFromYesterday": "Up from yesterday",
+    "downFromYesterday": "Down from yesterday"
+  },
+  "sections": {
+    "hotelStatistics": "Hotel Statistics",
+    "bookingsDetails": "Bookings Details"
+  },
+  "periods": {
+    "daily": "Daily",
+    "weekly": "Weekly",
+    "monthly": "Monthly",
+    "yearly": "Yearly"
+  },
+  "chart": {
+    "errorTitle": "Unable to load chart data",
+    "errorSubtitle": "Please try again later",
+    "noData": "No Data"
+  },
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "manageHotels": "Manage Hotels",
+    "manageBookings": "Manage Bookings",
+    "logout": "Logout"
+  },
+  "status": {
+    "active": "Active",
+    "pending_payment": "Pending Payment",
+    "payment_failed": "Payment Failed",
+    "pending_assignment": "Pending Assignment",
+    "confirmed": "Confirmed",
+    "in_progress": "In Progress",
+    "completed": "Completed",
+    "cancelled": "Cancelled"
+  },
+  "table": {
+    "noBookings": "No recent hotel bookings",
+    "stt": "STT",
+    "name": "Hotel",
+    "price": "Price",
+    "dateTime": "Booked At",
+    "address": "Hotel Address",
+    "status": "Status"
+  },
+  "common": {
+    "admin": "Admin"
+  }
+}
