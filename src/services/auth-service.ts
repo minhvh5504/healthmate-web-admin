@@ -24,7 +24,7 @@ export const authService = {
    */
   register: async (payload: RegisterPayload): Promise<RegisterResponse> => {
     try {
-      const response = await apiClient<UserData>('auth/admin/register', {
+      const response = await apiClient<UserData>('admin/auth/register', {
         method: 'POST',
         data: payload,
       });
@@ -91,7 +91,7 @@ export const authService = {
    */
   resendCode: async (payload: ResendCodePayload): Promise<ResendOtpResponse> => {
     try {
-      await apiClient<void>('auth/admin/resend-code', {
+      await apiClient<void>('admin/auth/resend-otp', {
         method: 'POST',
         data: payload,
       });
@@ -112,9 +112,12 @@ export const authService = {
    */
   verifyAccount: async (payload: VerifyPayload): Promise<VerifyOtpResponse> => {
     try {
-      await apiClient<void>('auth/admin/verify', {
+      await apiClient<void>('admin/auth/verify-email', {
         method: 'POST',
-        data: payload,
+        data: {
+          email: payload.email,
+          code: payload.codeId
+        },
       });
 
       return {
@@ -133,7 +136,7 @@ export const authService = {
    */
   sendResetPassCode: async (email: string): Promise<SendResetResponse> => {
     try {
-      await apiClient<void>('auth/admin/forgot-password', {
+      await apiClient<void>('auth/send-reset-password', {
         method: 'POST',
         data: { email },
       });
@@ -157,9 +160,12 @@ export const authService = {
    */
   login: async (payload: LoginPayload): Promise<LoginResponse> => {
     try {
-      const response = await apiClient<AuthResponse>('auth/admin/login', {
+      const response = await apiClient<AuthResponse>('admin/auth/login', {
         method: 'POST',
-        data: payload,
+        data: {
+          email: payload.account,
+          password: payload.password
+        },
       });
 
       return {
@@ -181,10 +187,11 @@ export const authService = {
   /**
    * Logout user
    */
-  logout: async (): Promise<{ ok: boolean }> => {
+  logout: async (refreshToken: string): Promise<{ ok: boolean }> => {
     try {
-      await apiClient<void>('auth/admin/logout', {
+      await apiClient<void>('admin/auth/logout', {
         method: 'POST',
+        data: { refreshToken }
       });
       return { ok: true };
     } catch (error) {

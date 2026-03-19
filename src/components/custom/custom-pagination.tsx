@@ -10,9 +10,9 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination';
-import { cn } from '@/lib/utils'; // Sử dụng hàm cn để gộp class Tailwind
+import { cn } from '@/lib/utils';
 
-// Định nghĩa các loại variant
+// Define variant types
 type CustomPaginationVariant = 'default' | 'flat' | 'rounded';
 
 interface CustomPaginationProps {

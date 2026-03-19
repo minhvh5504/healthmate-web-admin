@@ -87,14 +87,7 @@ export default function AppSidebar() {
           className="group flex items-center justify-center gap-3 rounded-lg px-2"
           aria-label="HealthMate Dashboard"
         >
-          <Image
-            src="/logo.svg"
-            alt="HealthMate Logo"
-            width={40}
-            height={40}
-            className="h-10 w-auto"
-          />
-          <span className="font-serif text-3xl font-bold text-[#238C98] group-data-[collapsible=icon]:hidden">
+          <span className="font-serif text-3xl font-bold text-[#007BFFB2] group-data-[collapsible=icon]:hidden">
             HealthMate
           </span>
         </Link>
@@ -117,8 +110,8 @@ export default function AppSidebar() {
                       className={cn(
                         "group py-6 text-[15px] font-medium transition-all duration-200 rounded-2xl",
                         isActive
-                          ? "bg-[#238C98] text-white hover:bg-[#1d7681] hover:text-white"
-                          : "text-slate-500 hover:bg-slate-50 hover:text-[#238C98]"
+                          ? "bg-[#007BFFB2] text-white hover:bg-[#007BFFB2] hover:text-white"
+                          : "text-slate-500 hover:bg-slate-50 hover:text-[#007BFFB2]"
                       )}
                     >
                       <Link
@@ -129,7 +122,7 @@ export default function AppSidebar() {
                         {/* Directly rendering item.icon to ensure it's themed correctly */}
                         <div className={cn(
                           "transition-colors",
-                          isActive ? "text-white" : "text-slate-400 group-hover:text-[#238C98]"
+                          isActive ? "text-white" : "text-slate-400 group-hover:text-[#434B94]"
                         )}>
                           <item.icon className="h-5 w-5" />
                         </div>

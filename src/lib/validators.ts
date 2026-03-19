@@ -14,7 +14,7 @@ export function normalizePhone(phone: string): string {
   return phone.replace(/\D/g, '');
 }
 
-/* Schema factories - tạo schema động theo ngôn ngữ hiện tại */
+/* Schema factories - Create dynamic schemas based on the current language */
 export const getNameSchema = () => z
   .string()
   .min(2, { message: i18nInstance.t('validation:name.tooShort') })
@@ -70,7 +70,7 @@ export const getConfirmPasswordSchemaConfirmPassword = () => z
     message: i18nInstance.t('validation:password.notMatch'),
   });
 
-/* Legacy exports - giữ lại cho backward compatibility */
+/* Legacy exports - Kept for backward compatibility */
 export const nameSchema = getNameSchema();
 export const emailSchema = getEmailSchema();
 export const passwordSchema = getPasswordSchema();

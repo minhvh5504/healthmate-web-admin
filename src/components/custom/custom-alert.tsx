@@ -1,9 +1,9 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Terminal, Lightbulb, CheckCircle, XCircle } from 'lucide-react'; // Đảm bảo đã cài đặt lucide-react
+import { Terminal, Lightbulb, CheckCircle, XCircle } from 'lucide-react'; // Ensure lucide-react is installed
 
-// Định nghĩa các loại variant
+// Define variant types
 type CustomAlertVariant = 'default' | 'info' | 'success' | 'destructive';
 
 interface CustomAlertProps {

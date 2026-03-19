@@ -1,12 +1,12 @@
 // API URL for Nest.js backend
-export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.dieuduong.vn/api';
+export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/api';
 
 export const API_ENDPOINTS = {
     AUTH: {
-        LOGIN: '/auth/login',
-        REGISTER: '/auth/register',
-        REFRESH_TOKEN: '/auth/refresh',
-        LOGOUT: '/auth/logout',
+        LOGIN: '/admin/auth/login',
+        REGISTER: '/admin/auth/register',
+        REFRESH_TOKEN: '/admin/auth/refresh',
+        LOGOUT: '/admin/auth/logout',
     },
     USERS: {
         PROFILE: '/users/profile',

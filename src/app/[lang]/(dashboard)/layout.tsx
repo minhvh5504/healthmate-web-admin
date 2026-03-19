@@ -12,7 +12,7 @@ export default function Layout({
     <main className="antialiased">
       <SidebarProvider>
         <AppSidebar />
-        <div className="flex min-h-svh w-full flex-col bg-[#F1F5F9]">
+        <div className="flex min-h-svh w-full flex-col bg-gradient-to-b from-[#FFFFFF] to-[#DDE0F7]">
           <PageHeader />
           <div className="w-full p-4">{children}</div>
         </div>

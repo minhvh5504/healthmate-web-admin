@@ -9,8 +9,7 @@ import axios from 'axios';
  */
 async function refreshAccessToken(token: JWT): Promise<JWT> {
     try {
-        const response = await axios.post(`${API_BASE_URL}/auth/admin/refresh-token`, {
-            userId: token.id,
+        const response = await axios.post(`${API_BASE_URL}/admin/auth/refresh`, {
             refreshToken: token.refreshToken,
         });
 
@@ -23,7 +22,7 @@ async function refreshAccessToken(token: JWT): Promise<JWT> {
         return {
             ...token,
             accessToken: refreshedTokens.accessToken,
-            refreshToken: refreshedTokens.refreshToken ?? token.refreshToken, // Fall back to old refresh token
+            refreshToken: refreshedTokens.refreshToken ?? token.refreshToken,
         };
     } catch (error) {
         console.error('RefreshAccessTokenError', error);
@@ -47,8 +46,8 @@ export const authOptions: NextAuthOptions = {
                 if (!credentials?.username || !credentials?.password) return null;
 
                 try {
-                    const response = await axios.post(`${API_BASE_URL}/auth/admin/login`, {
-                        account: credentials.username,
+                    const response = await axios.post(`${API_BASE_URL}/admin/auth/login`, {
+                        email: credentials.username,
                         password: credentials.password,
                     });
 
@@ -57,8 +56,8 @@ export const authOptions: NextAuthOptions = {
 
                     if (authData && authData.accessToken) {
                         return {
-                            id: authData.user._id,
-                            name: authData.user.username,
+                            id: authData.user.id,
+                            name: authData.user.fullName,
                             email: authData.user.email,
                             role: authData.user.role,
                             accessToken: authData.accessToken,
@@ -90,11 +89,6 @@ export const authOptions: NextAuthOptions = {
             if (trigger === 'update' && session) {
                 return { ...token, ...session };
             }
-
-            // If we had expiry info, we could call refreshAccessToken(token) here.
-            // But since backend doesn't return expiry in AuthResponse directly, 
-            // we'll rely on the client-side interceptor to trigger refresh if needed,
-            // or we can just return the token.
 
             return token;
         },

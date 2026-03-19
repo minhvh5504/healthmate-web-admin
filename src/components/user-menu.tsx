@@ -46,7 +46,7 @@ export function UserMenu() {
     }
   }
 
-  // Lấy chữ cái đầu của tên để làm fallback
+  // Get first letter of the name as fallback
   const getInitials = (name?: string | null) => {
     if (!name) return 'U';
     return name
