@@ -1,8 +1,8 @@
 "use client";
 
-import * as React from "react";
 import { useLanguage } from "@/hooks/use-language";
 import { Globe } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 type AuthLayoutProps = {
   children: React.ReactNode;
@@ -14,9 +14,10 @@ type AuthLayoutProps = {
 
 export default function AuthLayout({ children }: AuthLayoutProps) {
   const { currentLanguage, changeLanguage } = useLanguage();
+  const { t } = useTranslation("auth");
 
   const handleToggleLanguage = () => {
-    const nextLang = currentLanguage?.code === 'vi' ? 'en' : 'vi';
+    const nextLang = currentLanguage?.code === "vi" ? "en" : "vi";
     changeLanguage(nextLang);
   };
 
@@ -24,13 +25,22 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
     <main className="relative min-h-svh w-full grid place-items-center p-4 overflow-hidden bg-white">
       {/* Background container to isolate decorative elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Primary Linear Gradient Background */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#FFFFFF] to-[#DDE0F7]" />
+        {/* Primary Background */}
+        <div className="absolute inset-0 bg-[#F8FAFC]" />
 
-        {/* Background Gradients - Subtle enhancements */}
-        <div className="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] bg-[#eef2ff]/50 rounded-full blur-[120px]" />
-        <div className="absolute top-[20%] right-[-10%] w-[50%] h-[50%] bg-[#f5f3ff]/40 rounded-full blur-[100px]" />
-        <div className="absolute bottom-[-10%] left-[20%] w-[50%] h-[50%] bg-[#fff1f2]/30 rounded-full blur-[110px]" />
+        {/* Decorative Blobs */}
+        <div className="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] bg-blue-500/10 rounded-full blur-[120px]" />
+        <div className="absolute top-[20%] -right-[10%] w-[35%] h-[35%] bg-purple-500/10 rounded-full blur-[100px]" />
+        <div className="absolute -bottom-[10%] left-[20%] w-[45%] h-[45%] bg-indigo-500/10 rounded-full blur-[110px]" />
+
+        {/* Subtle Grid Pattern */}
+        <div
+          className="absolute inset-0 opacity-[0.02]"
+          style={{
+            backgroundImage: "radial-gradient(#434B94 1px, transparent 1px)",
+            backgroundSize: "32px 32px",
+          }}
+        />
       </div>
 
       {/* Language Header - Top Right */}
@@ -38,8 +48,13 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
         onClick={handleToggleLanguage}
         className="absolute top-8 right-8 z-20 flex items-center gap-1.5 text-slate-400 hover:text-slate-800 transition-colors cursor-pointer group select-none"
       >
-        <Globe size={16} className="transition-transform duration-300 group-hover:rotate-12" />
-        <span className="text-xs font-bold uppercase tracking-widest">{currentLanguage?.code || 'VI'}</span>
+        <Globe
+          size={16}
+          className="transition-transform duration-300 group-hover:rotate-12"
+        />
+        <span className="text-xs font-bold uppercase tracking-widest">
+          {currentLanguage?.code || "VI"}
+        </span>
       </div>
 
       {/* Main Card Container - Centered and Premium */}
@@ -51,7 +66,9 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
 
       {/* Footer - Positioned at bottom center */}
       <footer className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 text-[#7C8BA1] text-[14px] font-medium tracking-tight whitespace-nowrap">
-        © 2026 Healthmate. All rights reserved.
+        {t("copyright", {
+          defaultValue: "© 2026 Healthmate. All rights reserved.",
+        })}
       </footer>
     </main>
   );

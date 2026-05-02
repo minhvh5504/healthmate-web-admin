@@ -1,15 +1,17 @@
-import { useQuery } from '@tanstack/react-query';
-import { dashboardService } from '@/services/dashboard-service';
+import { useQuery } from "@tanstack/react-query";
+import { dashboardService } from "@/services/dashboard-service";
 
 /**
  * Query Keys for React Query cache management
  */
 export const dashboardQueryKeys = {
-  all: ['dashboard'] as const,
-  statistics: () => [...dashboardQueryKeys.all, 'statistics'] as const,
-  dashboardStats: () => [...dashboardQueryKeys.statistics(), 'dashboard-stats'] as const,
-  chartData: (type: string, date?: string) => [...dashboardQueryKeys.statistics(), 'chart-data', type, date] as const,
-  recentBookings: () => [...dashboardQueryKeys.all, 'recent-bookings'] as const,
+  all: ["dashboard"] as const,
+  statistics: () => [...dashboardQueryKeys.all, "statistics"] as const,
+  dashboardStats: () =>
+    [...dashboardQueryKeys.statistics(), "dashboard-stats"] as const,
+  chartData: (type: string, date?: string) =>
+    [...dashboardQueryKeys.statistics(), "chart-data", type, date] as const,
+  recentUsers: () => [...dashboardQueryKeys.all, "recent-users"] as const,
 };
 
 /**
@@ -26,7 +28,10 @@ export function useDashboardStats() {
 /**
  * Hook: Get chart data for dashboard
  */
-export function useDashboardChartData(type: 'week' | 'month' | 'year' = 'year', date?: string) {
+export function useDashboardChartData(
+  type: "week" | "month" | "year" = "year",
+  date?: string,
+) {
   return useQuery({
     queryKey: dashboardQueryKeys.chartData(type, date),
     queryFn: () => dashboardService.getChartData(type, date),
@@ -35,12 +40,12 @@ export function useDashboardChartData(type: 'week' | 'month' | 'year' = 'year', 
 }
 
 /**
- * Hook: Get recent bookings for dashboard table
+ * Hook: Get recent users for dashboard table
  */
-export function useRecentBookings() {
+export function useRecentUsers() {
   return useQuery({
-    queryKey: dashboardQueryKeys.recentBookings(),
-    queryFn: () => dashboardService.getRecentBookings(),
+    queryKey: dashboardQueryKeys.recentUsers(),
+    queryFn: () => dashboardService.getRecentUsers(),
     staleTime: 30000, // 30 seconds
   });
 }

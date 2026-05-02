@@ -34,9 +34,7 @@ const variantMap = {
   },
 };
 
-/**
- * Custom sonner toast function
- */
+// Hàm gọi sonner tuỳ chỉnh
 export const customSonner = ({
   title,
   description,
@@ -46,14 +44,13 @@ export const customSonner = ({
   const { icon, color } = variantMap[variant];
 
   toast.custom(
-    (t) => (
-      <div className="flex items-center mx-28 gap-3 py-2.5 px-4 bg-white/95 backdrop-blur-md dark:bg-neutral-900/95 rounded-2xl 
-      shadow-[0_20px_40px_-15px_rgba(0,0,0,0.15)] border border-neutral-200 dark:border-neutral-800 w-fit max-w-[320px] transition-all duration-300 select-none">
-        <div className="flex-shrink-0">{icon}</div>
+    () => (
+      <div className="flex items-start gap-3 p-3 bg-white dark:bg-neutral-900 rounded-md shadow-lg border border-neutral-200 dark:border-neutral-700 max-w-[380px]">
+        <div className="mt-1">{icon}</div>
 
-        <div className={`overflow-hidden ${color} flex flex-col`}>
-          <p className="font-bold text-[14px] leading-tight tracking-tight">{title}</p>
-          <p className="text-[12px] leading-snug mt-0.5 text-neutral-500 dark:text-neutral-400 font-medium">{description}</p>
+        <div className={`flex-1 ${color}`}>
+          <p className="font-semibold">{title}</p>
+          <p className="text-sm mt-0.5 text-neutral-600 dark:text-neutral-300">{description}</p>
         </div>
       </div>
     ),

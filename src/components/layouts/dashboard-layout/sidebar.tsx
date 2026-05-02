@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   Sidebar,
   SidebarContent,
@@ -12,8 +12,7 @@ import {
   SidebarMenuItem,
   SidebarHeader,
   SidebarFooter,
-} from '@/components/ui/sidebar';
-import Image from 'next/image';
+} from "@/components/ui/sidebar";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -25,43 +24,54 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import {
-  LayoutDashboard,
-  Power,
-} from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { useCallback, useEffect, useState } from 'react';
-import { signOut } from 'next-auth/react';
-import { useTranslation } from 'react-i18next';
+import { LayoutDashboard, Power, Users, Pill, LucideIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { useCallback, useEffect, useState } from "react";
+import { signOut } from "next-auth/react";
+import { useTranslation } from "react-i18next";
 
 type Item = {
   title: string;
   href: string;
-  icon: any;
+  icon: LucideIcon;
 };
 
 const normalizePath = (path: string) => {
-  const parts = path.split('/').filter(Boolean);
+  const parts = path.split("/").filter(Boolean);
   if (parts.length > 0 && parts[0].length === 2) {
     parts.shift();
   }
-  return '/' + parts.join('/');
+  return "/" + parts.join("/");
 };
 
 const matchPath = (pathname: string, href: string) => {
   const normalized = normalizePath(pathname);
-  return normalized === href || normalized.startsWith(href + '/');
+  return normalized === href || normalized.startsWith(href + "/");
 };
 
 export default function AppSidebar() {
-  const { t } = useTranslation(['auth', 'dashboard']);
+  const { t } = useTranslation(["auth", "dashboard"]);
   const pathname = usePathname();
 
   const items: Item[] = [
     {
-      title: t('dashboard:sidebar.dashboard'),
-      href: '/dashboard',
+      title: t("dashboard:sidebar.dashboard"),
+      href: "/dashboard",
       icon: LayoutDashboard,
+    },
+    {
+      title: t("dashboard:sidebar.manageUsers", {
+        defaultValue: "Manage User",
+      }),
+      href: "/manage-users",
+      icon: Users,
+    },
+    {
+      title: t("dashboard:sidebar.manageMedicines", {
+        defaultValue: "Manage Medicine",
+      }),
+      href: "/manage-medicines",
+      icon: Pill,
     },
   ];
 
@@ -71,13 +81,9 @@ export default function AppSidebar() {
     setPendingHref(null);
   }, [pathname]);
 
-
-  const handleNavigate = useCallback(
-    (href: string) => {
-      setPendingHref(href);
-    },
-    []
-  );
+  const handleNavigate = useCallback((href: string) => {
+    setPendingHref(href);
+  }, []);
 
   return (
     <Sidebar className="border-0" collapsible="icon">
@@ -111,7 +117,7 @@ export default function AppSidebar() {
                         "group py-6 text-[15px] font-medium transition-all duration-200 rounded-2xl",
                         isActive
                           ? "bg-[#007BFFB2] text-white hover:bg-[#007BFFB2] hover:text-white"
-                          : "text-slate-500 hover:bg-slate-50 hover:text-[#007BFFB2]"
+                          : "text-slate-500 hover:bg-slate-50 hover:text-[#007BFFB2]",
                       )}
                     >
                       <Link
@@ -120,13 +126,19 @@ export default function AppSidebar() {
                         className="flex items-center gap-3 px-3"
                       >
                         {/* Directly rendering item.icon to ensure it's themed correctly */}
-                        <div className={cn(
-                          "transition-colors",
-                          isActive ? "text-white" : "text-slate-400 group-hover:text-[#434B94]"
-                        )}>
+                        <div
+                          className={cn(
+                            "transition-colors",
+                            isActive
+                              ? "text-white"
+                              : "text-slate-400 group-hover:text-[#434B94]",
+                          )}
+                        >
                           <item.icon className="h-5 w-5" />
                         </div>
-                        <span className="truncate font-semibold">{item.title}</span>
+                        <span className="truncate font-semibold">
+                          {item.title}
+                        </span>
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
@@ -146,23 +158,25 @@ export default function AppSidebar() {
                 aria-label="Logout"
               >
                 <Power className="h-5 w-5" />
-                <span className="group-data-[collapsible=icon]:hidden">{t('dashboard:sidebar.logout')}</span>
+                <span className="group-data-[collapsible=icon]:hidden">
+                  {t("dashboard:sidebar.logout")}
+                </span>
               </button>
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
-                <AlertDialogTitle>{t('logout.title')}</AlertDialogTitle>
+                <AlertDialogTitle>{t("logout.title")}</AlertDialogTitle>
                 <AlertDialogDescription>
-                  {t('logout.description')}
+                  {t("logout.description")}
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel>{t('logout.cancel')}</AlertDialogCancel>
+                <AlertDialogCancel>{t("logout.cancel")}</AlertDialogCancel>
                 <AlertDialogAction
-                  onClick={() => signOut({ callbackUrl: '/login' })}
+                  onClick={() => signOut({ callbackUrl: "/login" })}
                   className="bg-red-600 hover:bg-red-700"
                 >
-                  {t('logout.confirm')}
+                  {t("logout.confirm")}
                 </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>

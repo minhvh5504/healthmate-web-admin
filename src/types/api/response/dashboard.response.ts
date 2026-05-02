@@ -1,13 +1,14 @@
-import { StatItem, ChartDataPoint, RecentBooking } from '@/types/entities/dashboard.entity';
+import {
+  StatItem,
+  ChartDataPoint,
+  RecentUser,
+} from "@/types/entities/dashboard.entity";
 
 /**
  * Backend Statistics Dashboard Response
  */
 export interface BackendDashboardStats {
-    users: StatItem;
-    bookings: StatItem;
-    revenue: StatItem;
-    pending: StatItem;
+  users: StatItem;
 }
 
 /**
@@ -16,6 +17,6 @@ export interface BackendDashboardStats {
 export type BackendChartDataPoint = ChartDataPoint;
 
 /**
- * Recent Booking Response
+ * Recent User Response
  */
-export type BackendRecentBooking = RecentBooking;
+export type BackendRecentUser = RecentUser;

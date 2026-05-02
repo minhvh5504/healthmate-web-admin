@@ -1,15 +1,15 @@
 {
   "stats": {
-    "totalUser": "Total User",
-    "totalHotelBooking": "Total Services",
-    "totalBooking": "Total Booking",
-    "totalPending": "Total Pending",
+    "totalUser": "Total Users",
+    "activeUsers": "Active Users",
+    "inactiveUsers": "Inactive Users",
+    "growthRate": "Growth Rate",
     "upFromYesterday": "Up from yesterday",
     "downFromYesterday": "Down from yesterday"
   },
   "sections": {
-    "hotelStatistics": "Service Statistics",
-    "bookingsDetails": "Appointment Details"
+    "userStatistics": "User Statistics",
+    "recentUsers": "Recent Users"
   },
   "periods": {
     "daily": "Daily",
@@ -18,36 +18,25 @@
     "yearly": "Yearly"
   },
   "chart": {
-    "errorTitle": "Unable to load chart data",
+    "errorTitle": "Could not load chart data",
     "errorSubtitle": "Please try again later",
-    "noData": "No Data"
+    "noData": "No data available"
   },
   "sidebar": {
     "dashboard": "Dashboard",
-    "manageHotels": "Manage Services",
-    "manageBookings": "Manage Appointments",
+    "manageUsers": "Manage User",
+    "manageMedicines": "Manage Medicine",
     "logout": "Logout"
   },
-  "status": {
-    "active": "Active",
-    "pending_payment": "Pending Payment",
-    "payment_failed": "Payment Failed",
-    "pending_assignment": "Pending Assignment",
-    "confirmed": "Confirmed",
-    "in_progress": "In Progress",
-    "completed": "Completed",
-    "cancelled": "Cancelled"
-  },
   "table": {
-    "noBookings": "No recent appointments",
-    "stt": "STT",
-    "name": "Clinic",
-    "price": "Price",
-    "dateTime": "Booked At",
-    "address": "Clinic Address",
-    "status": "Status"
+    "stt": "No.",
+    "user": "User",
+    "email": "Email",
+    "phone": "Phone",
+    "joinedAt": "Joined At"
   },
   "common": {
-    "admin": "Admin"
+    "admin": "Administrator",
+    "noData": "No data found"
   }
 }
