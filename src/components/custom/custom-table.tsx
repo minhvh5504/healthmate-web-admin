@@ -9,7 +9,7 @@ import {
 
 import React from 'react';
 
-// Define variant types
+// Định nghĩa các loại variant
 type CustomTableVariant = 'default' | 'striped' | 'compact';
 
 interface UserRow {

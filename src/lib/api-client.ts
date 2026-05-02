@@ -1,13 +1,13 @@
-import { API_BASE_URL } from '@/constants/api';
+import { API_BASE_URL } from "@/constants/api";
 import axios, {
   AxiosError,
   AxiosInstance,
   AxiosRequestConfig,
   AxiosResponse,
   InternalAxiosRequestConfig,
-} from 'axios';
-import { getSession, signOut } from 'next-auth/react';
-import type { Session } from 'next-auth';
+} from "axios";
+import { getSession, signOut } from "next-auth/react";
+import type { Session } from "next-auth";
 
 const API_URL = API_BASE_URL;
 
@@ -22,7 +22,7 @@ let failedQueue: Pending[] = [];
 
 /** Process queue */
 const processQueue = (error: Error | null, token: string | null = null) => {
-  failedQueue.forEach(req => {
+  failedQueue.forEach((req) => {
     if (error) {
       req.reject(error);
     } else {
@@ -39,7 +39,7 @@ const axiosInstance: AxiosInstance = axios.create({
   baseURL: API_URL,
   timeout: 10000,
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
   withCredentials: true,
 });
@@ -54,14 +54,16 @@ axiosInstance.interceptors.request.use(
     if (token) config.headers.Authorization = `Bearer ${token}`;
     return config;
   },
-  error => Promise.reject(error)
+  (error) => Promise.reject(error),
 );
 
 /** Response: 401 -> join queue, wait for refresh -> retry once */
 axiosInstance.interceptors.response.use(
-  response => response,
+  (response) => response,
   async (error: AxiosError) => {
-    const original = (error.config ?? {}) as AxiosRequestConfig & { _retry?: boolean };
+    const original = (error.config ?? {}) as AxiosRequestConfig & {
+      _retry?: boolean;
+    };
 
     // debugger;
     // If not 401 or already retried once -> throw error
@@ -71,15 +73,15 @@ axiosInstance.interceptors.response.use(
 
     // Whitelist: endpoints that don't need auth, don't retry on 401
     const publicEndpoints = [
-      '/admin/auth/refresh',
-      '/admin/auth/login',
-      '/admin/auth/register',
-      '/auth/send-reset-password',
-      '/admin/auth/verify-email',
-      '/admin/auth/resend-otp',
-      '/auth/reset-password'
+      "/admin/auth/refresh",
+      "/admin/auth/login",
+      "/admin/auth/register",
+      "/auth/send-reset-password",
+      "/admin/auth/verify-email",
+      "/admin/auth/resend-otp",
+      "/auth/reset-password",
     ];
-    if (publicEndpoints.some(endpoint => original.url?.includes(endpoint))) {
+    if (publicEndpoints.some((endpoint) => original.url?.includes(endpoint))) {
       return Promise.reject(error);
     }
 
@@ -95,17 +97,16 @@ axiosInstance.interceptors.response.use(
     try {
       isRefreshing = true;
 
-      // Proper way with NextAuth: just call getSession()
       // NextAuth will automatically run jwt() -> refreshAccessToken() if expired
       const newSession = await getSession();
       const newToken = (newSession as Session | null)?.accessToken || null;
-      console.log('newToken', newSession);
+      console.log("newToken", newSession);
 
       // Notify the queue
       processQueue(null, newToken);
 
       if (!newToken) {
-        await signOut({ callbackUrl: '/login' });
+        await signOut({ callbackUrl: "/login" });
         return Promise.reject(error);
       }
 
@@ -116,28 +117,36 @@ axiosInstance.interceptors.response.use(
 
       return axiosInstance(original);
     } catch (e) {
-      console.log('e', e);
-      processQueue(new Error('Refresh failed'), null);
-      await signOut({ callbackUrl: '/login' });
+      console.log("e", e);
+      processQueue(new Error("Refresh failed"), null);
+      await signOut({ callbackUrl: "/login" });
       return Promise.reject(e);
     } finally {
       isRefreshing = false;
     }
-  }
+  },
 );
 
 /** API client helper - handles NestJS response format */
 export async function apiClient<T>(
   endpoint: string,
-  options: Omit<AxiosRequestConfig, 'baseURL' | 'url'> & { returnFullResponse?: boolean } = {}
+  options: Omit<AxiosRequestConfig, "baseURL" | "url"> & {
+    returnFullResponse?: boolean;
+  } = {},
 ): Promise<T> {
   try {
-    const res: AxiosResponse = await axiosInstance({ url: endpoint, ...options });
+    const res: AxiosResponse = await axiosInstance({
+      url: endpoint,
+      ...options,
+    });
     const data = res.data;
+    console.log("[DEBUG] apiClient endpoint:", endpoint);
+    console.log("[DEBUG] apiClient raw data:", data);
 
     // NestJS success response format: { statusCode: 200/201, message, data }
     // Or custom format: { code: '00', message, data }
-    if (data && typeof data === 'object' && 'data' in data) {
+    if (data && typeof data === "object" && "data" in data) {
+      console.log("[DEBUG] apiClient returning data.data:", data.data);
       if (options.returnFullResponse) {
         return data as T;
       }
@@ -148,7 +157,7 @@ export async function apiClient<T>(
     return data as T;
   } catch (error: unknown) {
     // Extract error message from backend response
-    if (error && typeof error === 'object' && 'response' in error) {
+    if (error && typeof error === "object" && "response" in error) {
       const axiosError = error as AxiosError<{
         statusCode?: number;
         message?: string | string[];
@@ -160,7 +169,7 @@ export async function apiClient<T>(
       if (responseData) {
         // NestJS validation error: message is array
         if (Array.isArray(responseData.message)) {
-          throw new Error(responseData.message.join(', '));
+          throw new Error(responseData.message.join(", "));
         }
 
         // NestJS error: message is string

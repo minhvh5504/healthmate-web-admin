@@ -2,13 +2,13 @@
 import React from 'react';
 import Link from 'next/link';
 
-// Define data type for each breadcrumb item
+// Định nghĩa kiểu dữ liệu cho từng mục trong breadcrumb
 interface BreadcrumbItem {
   label: string;
   href: string;
 }
 
-// Define variant types
+// Định nghĩa các loại variant
 type CustomBreadcrumbVariant = 'default' | 'simple';
 
 interface CustomBreadcrumbProps {

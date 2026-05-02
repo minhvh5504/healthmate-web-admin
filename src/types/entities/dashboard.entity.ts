@@ -1,24 +1,19 @@
 export interface StatItem {
   total: number;
+  active: number;
   change: number;
 }
 
 export interface ChartDataPoint {
   label: string;
-  revenue: number;
   users: number;
-  bookings: number;
 }
 
-export interface RecentBooking {
+export interface RecentUser {
   id: string;
-  totalPrice: number;
-  status: string;
-  bookedAt: string;
-  hotel: {
-    _id?: string;
-    name?: string;
-    address?: string;
-    [key: string]: any;
-  };
+  fullName: string;
+  email: string;
+  phoneNumber?: string;
+  avatar?: string;
+  createdAt: string;
 }

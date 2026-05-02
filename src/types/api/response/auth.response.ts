@@ -32,3 +32,4 @@ export type ResetResponse = { ok: boolean; message?: string };
 export type SendResetResponse = { ok: boolean; redirectTo: string; message?: string };
 export type VerifyOtpResponse = { ok: boolean; message?: string; token?: string };
 export type ResendOtpResponse = { ok: boolean; message?: string };
+export type LogoutResponse = { ok: boolean; message?: string };

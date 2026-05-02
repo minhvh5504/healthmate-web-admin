@@ -1,15 +1,15 @@
 {
   "stats": {
     "totalUser": "Tổng người dùng",
-    "totalHotelBooking": "Tổng dịch vụ",
-    "totalBooking": "Tổng doanh thu",
-    "totalPending": "Đang chờ xử lý",
+    "activeUsers": "Người dùng hoạt động",
+    "inactiveUsers": "Người dùng không hoạt động",
+    "growthRate": "Tỷ lệ tăng trưởng",
     "upFromYesterday": "Tăng so với hôm qua",
     "downFromYesterday": "Giảm so với hôm qua"
   },
   "sections": {
-    "hotelStatistics": "Thống kê dịch vụ",
-    "bookingsDetails": "Chi tiết đặt phòng"
+    "userStatistics": "Thống kê người dùng",
+    "recentUsers": "Người dùng mới"
   },
   "periods": {
     "daily": "Hàng ngày",
@@ -24,30 +24,19 @@
   },
   "sidebar": {
     "dashboard": "Bảng điều khiển",
-    "manageHotels": "Quản lý dịch vụ",
-    "manageBookings": "Quản lý lượt dịch vụ",
+    "manageUsers": "Quản lý người dùng",
+    "manageMedicines": "Quản lý thuốc",
     "logout": "Đăng xuất"
   },
-  "status": {
-    "active": "Hoạt động",
-    "pending_payment": "Chờ thanh toán",
-    "payment_failed": "Thanh toán lỗi",
-    "pending_assignment": "Chờ phân công",
-    "confirmed": "Đã xác nhận",
-    "in_progress": "Đang thực hiện",
-    "completed": "Hoàn thành",
-    "cancelled": "Đã hủy"
-  },
   "table": {
-    "noBookings": "Không có lịch hẹn gần đây",
     "stt": "STT",
-    "name": "Phòng khám",
-    "price": "Giá",
-    "dateTime": "Ngày đặt",
-    "address": "Địa chỉ phòng khám",
-    "status": "Trạng thái"
+    "user": "Người dùng",
+    "email": "Email",
+    "phone": "Số điện thoại",
+    "joinedAt": "Ngày tham gia"
   },
   "common": {
-    "admin": "Quản trị viên"
+    "admin": "Quản trị viên",
+    "noData": "Không có dữ liệu"
   }
 }

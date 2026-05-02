@@ -15,7 +15,7 @@ interface Option {
   label: string;
 }
 
-// Define style variants
+// Định nghĩa các style variant
 const customSelectVariants = cva(
   'flex h-10 w-full rounded-md border px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-1 transition-colors',
   {
@@ -42,7 +42,7 @@ export function CustomSelect({
   options,
   value,
   onChange,
-  placeholder = 'Select option',
+  placeholder = 'Chọn option',
   variant,
 }: CustomSelectProps) {
   return (

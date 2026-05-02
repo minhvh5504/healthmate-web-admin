@@ -1,12 +1,12 @@
-import { apiClient } from '../lib/api-client';
+import { apiClient } from "../lib/api-client";
 import {
   RegisterPayload,
   LoginPayload,
   ResetPayload,
   VerifyPayload,
   ResendCodePayload,
-  CheckValidCodePayload
-} from '@/types/api/request/auth.request';
+  CheckValidCodePayload,
+} from "@/types/api/request/auth.request";
 import {
   UserData,
   AuthResponse,
@@ -15,8 +15,9 @@ import {
   ResetResponse,
   SendResetResponse,
   VerifyOtpResponse,
-  ResendOtpResponse
-} from '@/types/api/response/auth.response';
+  ResendOtpResponse,
+  LogoutResponse,
+} from "@/types/api/response/auth.response";
 
 export const authService = {
   /**
@@ -24,21 +25,21 @@ export const authService = {
    */
   register: async (payload: RegisterPayload): Promise<RegisterResponse> => {
     try {
-      const response = await apiClient<UserData>('admin/auth/register', {
-        method: 'POST',
+      const response = await apiClient<UserData>("admin/auth/register", {
+        method: "POST",
         data: payload,
       });
 
       return {
         ok: true,
-        redirectTo: '/otp',
+        redirectTo: "/otp",
         user: response,
       };
     } catch (error) {
       return {
         ok: false,
-        redirectTo: '',
-        message: error instanceof Error ? error.message : 'Registration failed',
+        redirectTo: "",
+        message: error instanceof Error ? error.message : "Registration failed",
       };
     }
   },
@@ -48,8 +49,8 @@ export const authService = {
    */
   resetPassword: async (payload: ResetPayload): Promise<ResetResponse> => {
     try {
-      await apiClient<void>('auth/admin/reset-password', {
-        method: 'POST',
+      await apiClient<void>("auth/admin/reset-password", {
+        method: "POST",
         data: payload,
       });
 
@@ -59,7 +60,8 @@ export const authService = {
     } catch (error) {
       return {
         ok: false,
-        message: error instanceof Error ? error.message : 'Password reset failed',
+        message:
+          error instanceof Error ? error.message : "Password reset failed",
       };
     }
   },
@@ -67,12 +69,17 @@ export const authService = {
   /**
    * Check valid code (for forgot password)
    */
-  checkValidCode: async (payload: CheckValidCodePayload): Promise<VerifyOtpResponse> => {
+  checkValidCode: async (
+    payload: CheckValidCodePayload,
+  ): Promise<VerifyOtpResponse> => {
     try {
-      const response = await apiClient<{ token: string }>('auth/admin/check-validcode', {
-        method: 'POST',
-        data: payload,
-      });
+      const response = await apiClient<{ token: string }>(
+        "auth/admin/check-validcode",
+        {
+          method: "POST",
+          data: payload,
+        },
+      );
 
       return {
         ok: true,
@@ -81,7 +88,7 @@ export const authService = {
     } catch (error) {
       return {
         ok: false,
-        message: error instanceof Error ? error.message : 'Invalid code',
+        message: error instanceof Error ? error.message : "Invalid code",
       };
     }
   },
@@ -89,10 +96,12 @@ export const authService = {
   /**
    * Resend code
    */
-  resendCode: async (payload: ResendCodePayload): Promise<ResendOtpResponse> => {
+  resendCode: async (
+    payload: ResendCodePayload,
+  ): Promise<ResendOtpResponse> => {
     try {
-      await apiClient<void>('admin/auth/resend-otp', {
-        method: 'POST',
+      await apiClient<void>("admin/auth/resend-otp", {
+        method: "POST",
         data: payload,
       });
 
@@ -102,7 +111,7 @@ export const authService = {
     } catch (error) {
       return {
         ok: false,
-        message: error instanceof Error ? error.message : 'Code resend failed',
+        message: error instanceof Error ? error.message : "Code resend failed",
       };
     }
   },
@@ -112,11 +121,11 @@ export const authService = {
    */
   verifyAccount: async (payload: VerifyPayload): Promise<VerifyOtpResponse> => {
     try {
-      await apiClient<void>('admin/auth/verify-email', {
-        method: 'POST',
+      await apiClient<void>("admin/auth/verify-email", {
+        method: "POST",
         data: {
           email: payload.email,
-          code: payload.codeId
+          code: payload.codeId,
         },
       });
 
@@ -126,7 +135,7 @@ export const authService = {
     } catch (error) {
       return {
         ok: false,
-        message: error instanceof Error ? error.message : 'Verification failed',
+        message: error instanceof Error ? error.message : "Verification failed",
       };
     }
   },
@@ -136,21 +145,21 @@ export const authService = {
    */
   sendResetPassCode: async (email: string): Promise<SendResetResponse> => {
     try {
-      await apiClient<void>('auth/send-reset-password', {
-        method: 'POST',
+      await apiClient<void>("auth/send-reset-password", {
+        method: "POST",
         data: { email },
       });
 
       return {
         ok: true,
-        redirectTo: '/otp',
+        redirectTo: "/otp",
       };
     } catch (error: unknown) {
       return {
         ok: false,
-        redirectTo: '',
+        redirectTo: "",
         message:
-          error instanceof Error ? error.message : 'Failed to send reset code',
+          error instanceof Error ? error.message : "Failed to send reset code",
       };
     }
   },
@@ -160,17 +169,17 @@ export const authService = {
    */
   login: async (payload: LoginPayload): Promise<LoginResponse> => {
     try {
-      const response = await apiClient<AuthResponse>('admin/auth/login', {
-        method: 'POST',
+      const response = await apiClient<AuthResponse>("admin/auth/login", {
+        method: "POST",
         data: {
           email: payload.account,
-          password: payload.password
+          password: payload.password,
         },
       });
 
       return {
         ok: true,
-        redirectTo: '/',
+        redirectTo: "/",
         user: response.user,
         accessToken: response.accessToken,
         refreshToken: response.refreshToken,
@@ -178,8 +187,8 @@ export const authService = {
     } catch (error) {
       return {
         ok: false,
-        redirectTo: '',
-        message: error instanceof Error ? error.message : 'Login failed',
+        redirectTo: "",
+        message: error instanceof Error ? error.message : "Login failed",
       };
     }
   },
@@ -187,16 +196,17 @@ export const authService = {
   /**
    * Logout user
    */
-  logout: async (refreshToken: string): Promise<{ ok: boolean }> => {
+  logout: async (refreshToken: string): Promise<LogoutResponse> => {
     try {
-      await apiClient<void>('admin/auth/logout', {
-        method: 'POST',
-        data: { refreshToken }
+      await apiClient<void>("admin/auth/logout", {
+        method: "POST",
+        data: { refreshToken },
       });
       return { ok: true };
     } catch (error) {
       return {
         ok: false,
+        message: error instanceof Error ? error.message : "Logout failed",
       };
     }
   },

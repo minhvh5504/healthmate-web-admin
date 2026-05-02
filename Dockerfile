@@ -3,7 +3,6 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# copy package files trước để cache layer
 COPY package.json yarn.lock ./
 
 # install all dependencies (including dev)

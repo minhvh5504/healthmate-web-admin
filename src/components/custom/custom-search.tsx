@@ -11,7 +11,7 @@ interface SearchBarProps {
 }
 
 const CustomSearch = ({
-  placeholder = 'Enter search keyword',
+  placeholder = 'Nhập từ khoá tìm kiếm',
   keyName = '_q',
   type = 'text',
   data,
@@ -59,7 +59,7 @@ const CustomSearch = ({
               }
             }}
             defaultValue={data || (searchParams.get(keyName) ?? '')}
-            className="w-full rounded-full bg-white/95 py-4 pl-14 pr-6 text-slate-700 placeholder:text-slate-400 shadow-md focus:shadow-lg focus:outline-none focus:ring-1 focus:ring-ring transition"
+            className="w-full rounded-full bg-white/95 py-4 pl-14 pr-6 text-slate-700 placeholder:text-slate-400 shadow-md focus:shadow-lg focus:outline-none transition"
           />
         </div>
       </div>

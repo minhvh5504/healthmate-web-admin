@@ -13,7 +13,7 @@ const customCheckboxVariants = cva(
   {
     variants: {
       variant: {
-        // 'default' is now the custom default version
+        // 'default' bây giờ là phiên bản custom mặc định
         default:
           'data-[state=checked]:border-[#238C98] data-[state=checked]:bg-[#238C98] data-[state=checked]:text-white dark:data-[state=checked]:border-[#1A5F6A] dark:data-[state=checked]:bg-[#1A5F6A]',
         destructive:
@@ -35,7 +35,7 @@ export interface CustomCheckboxProps
   variant?: VariantProps<typeof customCheckboxVariants>['variant'] | 'secondary';
 }
 
-// 3. Update component logic
+// 3. Cập nhật logic component
 const CustomCheckbox = React.forwardRef<
   React.ElementRef<typeof CheckboxPrimitive.Root>,
   CustomCheckboxProps

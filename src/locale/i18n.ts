@@ -1,11 +1,13 @@
-import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
-import VALIDATION_EN from './langs/en/validation.json';
-import VALIDATION_VN from './langs/vi/validation.json';
-import AUTH_EN from './langs/en/auth.json';
-import AUTH_VN from './langs/vi/auth.json';
-import DASHBOARD_EN from './langs/en/dashboard.json';
-import DASHBOARD_VN from './langs/vi/dashboard.json';
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import VALIDATION_EN from "./langs/en/validation.json";
+import VALIDATION_VN from "./langs/vi/validation.json";
+import AUTH_EN from "./langs/en/auth.json";
+import AUTH_VN from "./langs/vi/auth.json";
+import DASHBOARD_EN from "./langs/en/dashboard.json";
+import DASHBOARD_VN from "./langs/vi/dashboard.json";
+import COMMON_EN from "./langs/en/common.json";
+import COMMON_VN from "./langs/vi/common.json";
 
 const i18nInstance = i18n.createInstance();
 
@@ -15,20 +17,22 @@ i18nInstance.use(initReactI18next).init({
       validation: VALIDATION_EN,
       auth: AUTH_EN,
       dashboard: DASHBOARD_EN,
+      common: COMMON_EN,
     },
     vi: {
       validation: VALIDATION_VN,
       auth: AUTH_VN,
       dashboard: DASHBOARD_VN,
+      common: COMMON_VN,
     },
   },
-  lng: 'vi',
-  fallbackLng: 'vi',
+  lng: "vi",
+  fallbackLng: "vi",
   interpolation: {
     escapeValue: false,
   },
   detection: {
-    order: ['path', 'cookie', 'navigator'],
+    order: ["path", "cookie", "navigator"],
     lookupFromPathIndex: 0,
   },
   react: {
