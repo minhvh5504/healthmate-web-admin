@@ -26,6 +26,6 @@
     "length": "Code must be 6 digits.",
     "digitsOnly": "Code must contain only digits."
   },
-  "usernameRequired": "Please enter email or username.",
-  "invalidUsernameOrEmail": "Invalid email or username."
+  "usernameRequired": "Please enter username.",
+  "invalidUsernameOrEmail": "Invalid username."
 }

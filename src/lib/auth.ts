@@ -49,7 +49,7 @@ export const authOptions: NextAuthOptions = {
           const response = await axios.post(
             `${API_BASE_URL}/admin/auth/login`,
             {
-              email: credentials.username,
+              username: credentials.username,
               password: credentials.password,
             },
           );

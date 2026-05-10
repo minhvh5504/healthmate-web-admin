@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   Sidebar,
   SidebarContent,
@@ -44,7 +44,8 @@ const normalizePath = (path: string) => {
   return "/" + parts.join("/");
 };
 
-const matchPath = (pathname: string, href: string) => {
+const matchPath = (pathname: string | null, href: string) => {
+  if (!pathname) return false;
   const normalized = normalizePath(pathname);
   return normalized === href || normalized.startsWith(href + "/");
 };
@@ -52,6 +53,7 @@ const matchPath = (pathname: string, href: string) => {
 export default function AppSidebar() {
   const { t } = useTranslation(["auth", "dashboard"]);
   const pathname = usePathname();
+  const router = useRouter();
 
   const items: Item[] = [
     {
@@ -83,7 +85,8 @@ export default function AppSidebar() {
 
   const handleNavigate = useCallback((href: string) => {
     setPendingHref(href);
-  }, []);
+    router.push(href);
+  }, [router]);
 
   return (
     <Sidebar className="border-0" collapsible="icon">
@@ -122,10 +125,12 @@ export default function AppSidebar() {
                     >
                       <Link
                         href={item.href}
-                        onClick={() => handleNavigate(item.href)}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleNavigate(item.href);
+                        }}
                         className="flex items-center gap-3 px-3"
                       >
-                        {/* Directly rendering item.icon to ensure it's themed correctly */}
                         <div
                           className={cn(
                             "transition-colors",

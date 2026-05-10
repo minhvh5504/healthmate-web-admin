@@ -1,3 +1,4 @@
+import { API_ENDPOINTS } from "@/constants/api";
 import { apiClient } from "../lib/api-client";
 import {
   RegisterPayload,
@@ -25,7 +26,7 @@ export const authService = {
    */
   register: async (payload: RegisterPayload): Promise<RegisterResponse> => {
     try {
-      const response = await apiClient<UserData>("admin/auth/register", {
+      const response = await apiClient<UserData>(API_ENDPOINTS.AUTH.REGISTER, {
         method: "POST",
         data: payload,
       });
@@ -49,7 +50,7 @@ export const authService = {
    */
   resetPassword: async (payload: ResetPayload): Promise<ResetResponse> => {
     try {
-      await apiClient<void>("auth/admin/reset-password", {
+      await apiClient<void>("/auth/reset-password", {
         method: "POST",
         data: payload,
       });
@@ -74,7 +75,7 @@ export const authService = {
   ): Promise<VerifyOtpResponse> => {
     try {
       const response = await apiClient<{ token: string }>(
-        "auth/admin/check-validcode",
+        "/auth/verify-password",
         {
           method: "POST",
           data: payload,
@@ -100,7 +101,7 @@ export const authService = {
     payload: ResendCodePayload,
   ): Promise<ResendOtpResponse> => {
     try {
-      await apiClient<void>("admin/auth/resend-otp", {
+      await apiClient<void>(API_ENDPOINTS.AUTH.RESEND_OTP, {
         method: "POST",
         data: payload,
       });
@@ -121,11 +122,12 @@ export const authService = {
    */
   verifyAccount: async (payload: VerifyPayload): Promise<VerifyOtpResponse> => {
     try {
-      await apiClient<void>("admin/auth/verify-email", {
+      await apiClient<void>(API_ENDPOINTS.AUTH.VERIFY_EMAIL, {
         method: "POST",
         data: {
           email: payload.email,
           code: payload.codeId,
+          type: "account",
         },
       });
 
@@ -145,7 +147,7 @@ export const authService = {
    */
   sendResetPassCode: async (email: string): Promise<SendResetResponse> => {
     try {
-      await apiClient<void>("auth/send-reset-password", {
+      await apiClient<void>("/auth/send-reset-password", {
         method: "POST",
         data: { email },
       });
@@ -169,10 +171,10 @@ export const authService = {
    */
   login: async (payload: LoginPayload): Promise<LoginResponse> => {
     try {
-      const response = await apiClient<AuthResponse>("admin/auth/login", {
+      const response = await apiClient<AuthResponse>(API_ENDPOINTS.AUTH.LOGIN, {
         method: "POST",
         data: {
-          email: payload.account,
+          username: payload.username,
           password: payload.password,
         },
       });
@@ -198,7 +200,7 @@ export const authService = {
    */
   logout: async (refreshToken: string): Promise<LogoutResponse> => {
     try {
-      await apiClient<void>("admin/auth/logout", {
+      await apiClient<void>(API_ENDPOINTS.AUTH.LOGOUT, {
         method: "POST",
         data: { refreshToken },
       });

@@ -10,7 +10,7 @@ export type RegisterPayload = {
 };
 
 export type LoginPayload = {
-    account: string;
+    username: string;
     password: string;
 };
 
