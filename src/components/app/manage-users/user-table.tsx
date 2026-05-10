@@ -9,6 +9,7 @@ import { UserTableToolbar } from "./user-table-toolbar";
 import { UserTableContent } from "./user-table-content";
 import { UserTablePagination } from "./user-table-pagination";
 import { UserTableDialogs } from "./user-table-dialogs";
+import { UserDetailModal } from "./user-detail-modal";
 
 export function UserTable() {
   const { t } = useTranslation(["dashboard", "common"]);
@@ -22,6 +23,7 @@ export function UserTable() {
 
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [userToDelete, setUserToDelete] = useState<User | null>(null);
+  const [userToView, setUserToView] = useState<User | null>(null);
 
   const totalPages = Math.ceil(total / limit);
   const paginatedUsers = users; // Data is already paginated from server
@@ -78,7 +80,7 @@ export function UserTable() {
         isError={isError}
         noDataText={t("common:noData")}
         startIndex={(page - 1) * limit}
-        onView={(user) => console.log("View user", user)}
+        onView={setUserToView}
         onToggleStatus={setSelectedUser}
         onDelete={setUserToDelete}
       />
@@ -98,6 +100,13 @@ export function UserTable() {
         onCloseDeleteDialog={() => setUserToDelete(null)}
         onConfirmStatus={handleToggleStatus}
         onConfirmDelete={handleDeleteUser}
+      />
+
+      {/* 5. View Detail Modal */}
+      <UserDetailModal
+        user={userToView}
+        isOpen={!!userToView}
+        onClose={() => setUserToView(null)}
       />
     </div>
   );
