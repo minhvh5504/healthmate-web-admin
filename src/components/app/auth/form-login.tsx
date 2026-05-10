@@ -4,7 +4,7 @@ import * as React from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Eye, EyeOff, Mail, Lock } from "lucide-react";
+import { Eye, EyeOff, User, Lock } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { useNextAuth } from "@/hooks/use-next-auth";
@@ -125,7 +125,7 @@ export default function LoginForm() {
                   </Label>
                   <FormControl>
                     <div className="relative group w-full">
-                      <Mail
+                      <User
                         className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-slate-500 transition-colors"
                         size={18}
                       />

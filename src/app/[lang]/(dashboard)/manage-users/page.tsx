@@ -1,7 +1,9 @@
+import { UserTable } from "@/components/app/manage-users/user-table";
+
 export default function ManageUsersPage() {
   return (
-    <div className="flex items-center justify-center min-h-[400px]">
-      <span className="text-gray-400 font-medium italic">No data</span>
+    <div className="p-1 md:p-4">
+      <UserTable />
     </div>
   );
 }

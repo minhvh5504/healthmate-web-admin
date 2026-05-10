@@ -26,6 +26,6 @@
     "length": "Mã phải có 6 chữ số.",
     "digitsOnly": "Mã chỉ được chứa chữ số."
   },
-  "usernameRequired": "Vui lòng nhập email hoặc tên đăng nhập.",
-  "invalidUsernameOrEmail": "Email hoặc tên đăng nhập không hợp lệ."
+  "usernameRequired": "Vui lòng nhập tên đăng nhập.",
+  "invalidUsernameOrEmail": "Tên đăng nhập không hợp lệ."
 }
