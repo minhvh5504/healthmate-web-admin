@@ -62,7 +62,7 @@ export function UserTable() {
   };
 
   return (
-    <div className="w-full bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100 pb-4 transition-all">
+    <div className="w-full bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100 p-0 transition-all">
       {/* 1. Toolbar: Title & Filters */}
       <UserTableToolbar
         title={t("dashboard:sidebar.manageUsers")}
