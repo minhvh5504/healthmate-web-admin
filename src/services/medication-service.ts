@@ -10,7 +10,6 @@ export interface Medication {
   manufacturer?: string;
   description?: string;
   imageUrl?: string;
-  isVerified: boolean;
   createdAt: string;
   updatedAt: string;
 }
@@ -37,9 +36,7 @@ class MedicationService {
     });
     if (search) queryParams.append("q", search);
 
-    const endpoint = search
-      ? `${API_ENDPOINTS.MEDICATION.SEARCH}?${queryParams.toString()}`
-      : `${API_ENDPOINTS.MEDICATION.BASE}?${queryParams.toString()}`;
+    const endpoint = `${API_ENDPOINTS.MEDICATION.ADMIN_ALL}?${queryParams.toString()}`;
 
     return await apiClient<MedicationListResponse>(endpoint, {
       method: "GET",

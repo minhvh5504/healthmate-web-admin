@@ -25,6 +25,7 @@ export const API_ENDPOINTS = {
   },
   MEDICATION: {
     BASE: "/medication",
+    ADMIN_ALL: "/medication/admin/all",
     SEARCH: "/medication/search",
     DETAIL: (id: string) => `/medication/${id}`,
   },
