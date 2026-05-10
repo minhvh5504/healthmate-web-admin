@@ -12,9 +12,9 @@ interface UserTableToolbarProps {
 
 export function UserTableToolbar({ title, activeTab, onTabChange }: UserTableToolbarProps) {
     return (
-        <div className="p-6 pb-0">
-            <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-bold text-slate-800">
+        <div className="p-4 px-6 pb-0">
+            <div className="flex items-center justify-between mb-4">
+                <h2 className="text-lg font-bold text-slate-800">
                     {title}
                 </h2>
             </div>
