@@ -1,32 +1,33 @@
 "use client";
 
 import React from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
   DialogTitle,
+  DialogHeader,
 } from "@/components/ui/dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import {
-  User as UserIcon,
-  Mail,
-  Calendar,
   Shield,
   Activity,
+  Mail,
   Phone,
-  MapPin,
+  Calendar,
   Clock,
+  MapPin,
   CheckCircle2,
   XCircle,
+  User as UserIcon,
 } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
-import { userProfileService } from "@/services/user-service";
-import { userQueryKeys, User } from "@/hooks/use-users";
-import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
+import { userQueryKeys, User } from "@/hooks/use-users";
+import { userProfileService } from "@/services/user-service";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface UserDetailModalProps {
   user: User | null;
@@ -39,6 +40,7 @@ export function UserDetailModal({
   isOpen,
   onClose,
 }: UserDetailModalProps) {
+  const { t, i18n } = useTranslation("user");
   // 1. Fetch deep detail when modal opens
   const { data: userDetail, isLoading } = useQuery({
     queryKey: userQueryKeys.detail(user?.id || ""),
@@ -50,13 +52,16 @@ export function UserDetailModal({
 
   const formatDate = (dateString?: string) => {
     if (!dateString) return "N/A";
-    return new Date(dateString).toLocaleDateString("vi-VN", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
+    return new Date(dateString).toLocaleDateString(
+      i18n.language === "vi" ? "vi-VN" : "en-US",
+      {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      },
+    );
   };
 
   return (
@@ -118,12 +123,12 @@ export function UserDetailModal({
               {user?.isActive ? (
                 <div className="flex items-center gap-1">
                   <CheckCircle2 size={12} />
-                  <span>Hoạt động</span>
+                  <span>{t("detail.active")}</span>
                 </div>
               ) : (
                 <div className="flex items-center gap-1">
                   <XCircle size={12} />
-                  <span>Đã khóa</span>
+                  <span>{t("detail.locked")}</span>
                 </div>
               )}
             </Badge>
@@ -148,23 +153,27 @@ export function UserDetailModal({
               <section>
                 <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2">
                   <UserIcon size={14} />
-                  Thông tin cá nhân
+                  {t("detail.personalInfo")}
                 </h3>
                 <div className="grid grid-cols-2 gap-y-6 gap-x-8">
                   <InfoItem
                     icon={<Mail size={16} />}
-                    label="Email"
+                    label={t("detail.email")}
                     value={user?.email}
                   />
                   <InfoItem
                     icon={<Phone size={16} />}
-                    label="Số điện thoại"
-                    value={userDetail?.profile?.phoneNumber || "Chưa cập nhật"}
+                    label={t("detail.phone")}
+                    value={
+                      userDetail?.profile?.phoneNumber || t("detail.notUpdated")
+                    }
                   />
                   <InfoItem
                     icon={<MapPin size={16} />}
-                    label="Địa chỉ"
-                    value={userDetail?.profile?.address || "Chưa cập nhật"}
+                    label={t("detail.address")}
+                    value={
+                      userDetail?.profile?.address || t("detail.notUpdated")
+                    }
                     className="col-span-2"
                   />
                 </div>
@@ -174,17 +183,17 @@ export function UserDetailModal({
               <section>
                 <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2">
                   <Activity size={14} />
-                  Hoạt động hệ thống
+                  {t("detail.systemActivity")}
                 </h3>
                 <div className="grid grid-cols-2 gap-y-6 gap-x-8">
                   <InfoItem
                     icon={<Calendar size={16} />}
-                    label="Ngày tham gia"
+                    label={t("detail.joinedDate")}
                     value={formatDate(user?.createdAt)}
                   />
                   <InfoItem
                     icon={<Clock size={16} />}
-                    label="Cập nhật gần nhất"
+                    label={t("detail.lastUpdate")}
                     value={formatDate(userDetail?.updatedAt || user?.createdAt)}
                   />
                 </div>

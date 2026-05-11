@@ -15,6 +15,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { User } from "@/hooks/use-users";
+import { useTranslation } from "react-i18next";
 
 interface UserTableContentProps {
   users: User[];
@@ -37,8 +38,11 @@ export function UserTableContent({
   onDelete,
   startIndex,
 }: UserTableContentProps) {
+  const { t, i18n } = useTranslation("user");
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("vi-VN");
+    return new Date(dateString).toLocaleDateString(
+      i18n.language === "vi" ? "vi-VN" : "en-US",
+    );
   };
 
   const getStatusColor = (user: User) => {
@@ -52,22 +56,22 @@ export function UserTableContent({
         <TableHeader>
           <TableRow className="border-0 hover:bg-transparent h-14">
             <TableHead className="font-bold text-slate-400 text-[11px] uppercase tracking-wider text-center w-[60px]">
-              STT
+              {t("table.stt")}
             </TableHead>
             <TableHead className="font-bold text-slate-400 text-[11px] uppercase tracking-wider">
-              Người dùng
+              {t("table.user")}
             </TableHead>
             <TableHead className="font-bold text-slate-400 text-[11px] uppercase tracking-wider text-center">
-              Vai trò
+              {t("table.role")}
             </TableHead>
             <TableHead className="font-bold text-slate-400 text-[11px] uppercase tracking-wider text-center">
-              Ngày tạo
+              {t("table.createdAt")}
             </TableHead>
             <TableHead className="font-bold text-slate-400 text-[11px] uppercase tracking-wider text-center">
-              Trạng thái
+              {t("table.status")}
             </TableHead>
             <TableHead className="font-bold text-slate-400 text-[11px] uppercase tracking-wider text-center w-[150px]">
-              Thao tác
+              {t("table.actions")}
             </TableHead>
           </TableRow>
         </TableHeader>
@@ -92,7 +96,7 @@ export function UserTableContent({
                 colSpan={6}
                 className="text-center py-20 text-red-500 italic"
               >
-                Có lỗi xảy ra khi tải dữ liệu
+                {t("table.errorLoading")}
               </TableCell>
             </TableRow>
           ) : users.length === 0 ? (
@@ -160,7 +164,7 @@ export function UserTableContent({
                       getStatusColor(user),
                     )}
                   >
-                    {user.isActive ? "Hoạt động" : "Bị khóa"}
+                    {user.isActive ? t("table.active") : t("table.inactive")}
                   </span>
                 </TableCell>
                 <TableCell className="text-center">

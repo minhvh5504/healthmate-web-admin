@@ -1,0 +1,53 @@
+{
+  "title": "Quản lý người dùng",
+  "table": {
+    "stt": "STT",
+    "user": "Người dùng",
+    "role": "Vai trò",
+    "createdAt": "Ngày tạo",
+    "status": "Trạng thái",
+    "actions": "Thao tác",
+    "active": "Hoạt động",
+    "inactive": "Bị khóa",
+    "all": "Tất cả",
+    "errorLoading": "Có lỗi xảy ra khi tải dữ liệu",
+    "noData": "Không có dữ liệu người dùng"
+  },
+  "dialogs": {
+    "status": {
+      "titleLock": "Xác nhận khóa tài khoản",
+      "titleUnlock": "Xác nhận mở khóa tài khoản",
+      "descriptionLock": "Bạn có chắc chắn muốn khóa tài khoản của {{name}}? Sau khi khóa, người dùng sẽ không thể đăng nhập vào hệ thống.",
+      "descriptionUnlock": "Bạn có chắc chắn muốn mở khóa tài khoản của {{name}}? Sau khi mở khóa, người dùng có thể đăng nhập lại bình thường.",
+      "confirm": "Xác nhận",
+      "cancel": "Hủy"
+    },
+    "delete": {
+      "title": "Xác nhận xóa người dùng",
+      "description": "Hành động này không thể hoàn tác. Bạn có chắc chắn muốn xóa vĩnh viễn người dùng {{name}} khỏi hệ thống?",
+      "confirm": "Xóa vĩnh viễn",
+      "cancel": "Hủy"
+    }
+  },
+  "detail": {
+    "title": "Chi tiết người dùng",
+    "personalInfo": "Thông tin cá nhân",
+    "systemActivity": "Hoạt động hệ thống",
+    "email": "Email",
+    "phone": "Số điện thoại",
+    "address": "Địa chỉ",
+    "notUpdated": "Chưa cập nhật",
+    "joinedDate": "Ngày tham gia",
+    "lastUpdate": "Cập nhật gần nhất",
+    "active": "Hoạt động",
+    "locked": "Đã khóa"
+  },
+  "toast": {
+    "toggleStatusSuccess": "Đã {{status}} người dùng thành công",
+    "deleteSuccess": "Đã xóa người dùng thành công",
+    "error": "Có lỗi xảy ra",
+    "errorDelete": "Có lỗi xảy ra khi xóa",
+    "statusLock": "khóa",
+    "statusUnlock": "mở khóa"
+  }
+}
