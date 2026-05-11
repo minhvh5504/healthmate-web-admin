@@ -20,13 +20,22 @@ export function MedicineTable() {
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 500);
 
-  const { medications, total, isLoading, isError, deleteMedication } =
-    useMedications(page, limit, debouncedSearch);
+  const {
+    medications,
+    total,
+    isLoading,
+    isError,
+    createMedication,
+    updateMedication,
+    deleteMedication,
+  } = useMedications(page, limit, debouncedSearch);
 
   const [medicineToDelete, setMedicineToDelete] = useState<Medication | null>(
     null,
   );
+  const [medicineToEdit, setMedicineToEdit] = useState<Medication | null>(null);
   const [medicineToView, setMedicineToView] = useState<Medication | null>(null);
+  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
 
   const totalPages = Math.ceil(total / limit);
 
@@ -46,14 +55,13 @@ export function MedicineTable() {
     }
   };
 
-  const handleEditMedicine = (medicine: Medication) => {
-    // TODO: Implement edit modal/page
-    toast.info(`Edit: ${medicine.name}`);
+  const handleConfirmAdd = async (data: Partial<Medication>) => {
+    return await createMedication(data);
   };
 
-  const handleAddMedicine = () => {
-    // TODO: Implement add modal/page
-    toast.info("Add new medicine - Feature is developing");
+  const handleConfirmEdit = async (data: Partial<Medication>) => {
+    if (!medicineToEdit) return { ok: false };
+    return await updateMedication(medicineToEdit.id, data);
   };
 
   return (
@@ -63,7 +71,7 @@ export function MedicineTable() {
         title={t("dashboard:sidebar.manageMedicines")}
         searchValue={search}
         onSearchChange={setSearch}
-        onAddClick={handleAddMedicine}
+        onAddClick={() => setIsAddDialogOpen(true)}
       />
 
       {/* 2. Table Content */}
@@ -74,7 +82,7 @@ export function MedicineTable() {
         noDataText={t("common:noData")}
         startIndex={(page - 1) * limit}
         onView={setMedicineToView}
-        onEdit={handleEditMedicine}
+        onEdit={setMedicineToEdit}
         onDelete={setMedicineToDelete}
       />
 
@@ -90,6 +98,12 @@ export function MedicineTable() {
         medicineToDelete={medicineToDelete}
         onCloseDeleteDialog={() => setMedicineToDelete(null)}
         onConfirmDelete={handleDeleteMedicine}
+        medicineToEdit={medicineToEdit}
+        isAddDialogOpen={isAddDialogOpen}
+        onCloseEditDialog={() => setMedicineToEdit(null)}
+        onCloseAddDialog={() => setIsAddDialogOpen(false)}
+        onConfirmAdd={handleConfirmAdd}
+        onConfirmEdit={handleConfirmEdit}
       />
 
       {/* 5. View Detail Modal */}
