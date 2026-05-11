@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { cn } from '@/lib/utils';
 import { User } from '@/hooks/use-users';
+import { useTranslation } from 'react-i18next';
 
 interface UserTableDialogsProps {
     selectedUser: User | null;
@@ -31,6 +32,7 @@ export function UserTableDialogs({
     onConfirmStatus,
     onConfirmDelete
 }: UserTableDialogsProps) {
+    const { t } = useTranslation('user');
     return (
         <>
             {/* Status Toggle Dialog */}
@@ -41,20 +43,17 @@ export function UserTableDialogs({
                 <AlertDialogContent className="rounded-2xl border-none shadow-2xl">
                     <AlertDialogHeader>
                         <AlertDialogTitle className="text-xl font-bold text-slate-800">
-                            Xác nhận {selectedUser?.isActive ? "khóa" : "mở khóa"} tài khoản
+                            {selectedUser?.isActive ? t("dialogs.status.titleLock") : t("dialogs.status.titleUnlock")}
                         </AlertDialogTitle>
                         <AlertDialogDescription className="text-slate-500">
-                            Bạn có chắc chắn muốn{" "}
-                            {selectedUser?.isActive ? "khóa" : "mở khóa"} tài khoản của{" "}
-                            <b>{selectedUser?.fullName}</b>?
-                            {selectedUser?.isActive
-                                ? " Sau khi khóa, người dùng sẽ không thể đăng nhập vào hệ thống."
-                                : " Sau khi mở khóa, người dùng có thể đăng nhập lại bình thường."}
+                            {selectedUser?.isActive 
+                                ? t("dialogs.status.descriptionLock", { name: selectedUser?.fullName }) 
+                                : t("dialogs.status.descriptionUnlock", { name: selectedUser?.fullName })}
                         </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter className="gap-2 pt-4">
                         <AlertDialogCancel className="rounded-xl border-slate-100 text-slate-500 font-bold hover:bg-slate-50">
-                            Hủy
+                            {t("dialogs.status.cancel")}
                         </AlertDialogCancel>
                         <AlertDialogAction
                             onClick={onConfirmStatus}
@@ -65,7 +64,7 @@ export function UserTableDialogs({
                                     : "bg-green-500 hover:bg-green-600 shadow-green-100",
                             )}
                         >
-                            Xác nhận
+                            {t("dialogs.status.confirm")}
                         </AlertDialogAction>
                     </AlertDialogFooter>
                 </AlertDialogContent>
@@ -79,21 +78,21 @@ export function UserTableDialogs({
                 <AlertDialogContent className="rounded-2xl border-none shadow-2xl">
                     <AlertDialogHeader>
                         <AlertDialogTitle className="text-xl font-bold text-slate-800">
-                            Xác nhận xóa người dùng
+                            {t("dialogs.delete.title")}
                         </AlertDialogTitle>
                         <AlertDialogDescription className="text-slate-500">
-                            Hành động này <b>không thể hoàn tác</b>. Bạn có chắc chắn muốn xóa vĩnh viễn người dùng <b>{userToDelete?.fullName}</b> khỏi hệ thống?
+                            {t("dialogs.delete.description", { name: userToDelete?.fullName })}
                         </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter className="gap-2 pt-4">
                         <AlertDialogCancel className="rounded-xl border-slate-100 text-slate-500 font-bold hover:bg-slate-50">
-                            Hủy
+                            {t("dialogs.delete.cancel")}
                         </AlertDialogCancel>
                         <AlertDialogAction
                             onClick={onConfirmDelete}
                             className="rounded-xl font-bold text-white shadow-lg transition-all bg-red-600 hover:bg-red-700 shadow-red-100"
                         >
-                            Xóa vĩnh viễn
+                            {t("dialogs.delete.confirm")}
                         </AlertDialogAction>
                     </AlertDialogFooter>
                 </AlertDialogContent>

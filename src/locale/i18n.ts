@@ -10,6 +10,8 @@ import COMMON_EN from "./langs/en/common.json";
 import COMMON_VN from "./langs/vi/common.json";
 import MEDICINE_EN from "./langs/en/medicine.json";
 import MEDICINE_VN from "./langs/vi/medicine.json";
+import USER_EN from "./langs/en/user.json";
+import USER_VN from "./langs/vi/user.json";
 
 const i18nInstance = i18n.createInstance();
 
@@ -21,6 +23,7 @@ i18nInstance.use(initReactI18next).init({
       dashboard: DASHBOARD_EN,
       common: COMMON_EN,
       medicine: MEDICINE_EN,
+      user: USER_EN,
     },
     vi: {
       validation: VALIDATION_VN,
@@ -28,6 +31,7 @@ i18nInstance.use(initReactI18next).init({
       dashboard: DASHBOARD_VN,
       common: COMMON_VN,
       medicine: MEDICINE_VN,
+      user: USER_VN,
     },
   },
   lng: "vi",

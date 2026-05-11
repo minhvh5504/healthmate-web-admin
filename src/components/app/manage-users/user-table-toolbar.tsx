@@ -3,6 +3,7 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { UserStatus } from '@/hooks/use-users';
+import { useTranslation } from 'react-i18next';
 
 interface UserTableToolbarProps {
     title: string;
@@ -11,6 +12,7 @@ interface UserTableToolbarProps {
 }
 
 export function UserTableToolbar({ title, activeTab, onTabChange }: UserTableToolbarProps) {
+    const { t } = useTranslation('user');
     return (
         <div className="p-4 px-6 pb-0">
             <div className="flex items-center justify-between mb-4">
@@ -30,7 +32,7 @@ export function UserTableToolbar({ title, activeTab, onTabChange }: UserTableToo
                             activeTab === tab ? "text-[#4318FF]" : "text-gray-300"
                         )}
                     >
-                        {tab === 'all' ? 'Tất cả' : tab === 'active' ? 'Hoạt động' : 'Bị khóa'}
+                        {t(`table.${tab}`)}
                         {activeTab === tab && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-[#4318FF] rounded-full" />}
                     </button>
                 ))}

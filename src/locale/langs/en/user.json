@@ -1,0 +1,53 @@
+{
+  "title": "User Management",
+  "table": {
+    "stt": "No.",
+    "user": "User",
+    "role": "Role",
+    "createdAt": "Created At",
+    "status": "Status",
+    "actions": "Actions",
+    "active": "Active",
+    "inactive": "Locked",
+    "all": "All",
+    "errorLoading": "An error occurred while loading data",
+    "noData": "No user data found"
+  },
+  "dialogs": {
+    "status": {
+      "titleLock": "Confirm Lock Account",
+      "titleUnlock": "Confirm Unlock Account",
+      "descriptionLock": "Are you sure you want to lock the account of {{name}}? After locking, the user will not be able to log into the system.",
+      "descriptionUnlock": "Are you sure you want to unlock the account of {{name}}? After unlocking, the user can log in again normally.",
+      "confirm": "Confirm",
+      "cancel": "Cancel"
+    },
+    "delete": {
+      "title": "Confirm Delete User",
+      "description": "This action cannot be undone. Are you sure you want to permanently delete user {{name}} from the system?",
+      "confirm": "Permanently Delete",
+      "cancel": "Cancel"
+    }
+  },
+  "detail": {
+    "title": "User Details",
+    "personalInfo": "Personal Information",
+    "systemActivity": "System Activity",
+    "email": "Email",
+    "phone": "Phone Number",
+    "address": "Address",
+    "notUpdated": "Not updated",
+    "joinedDate": "Joined Date",
+    "lastUpdate": "Last Update",
+    "active": "Active",
+    "locked": "Locked"
+  },
+  "toast": {
+    "toggleStatusSuccess": "Successfully {{status}} the user",
+    "deleteSuccess": "Successfully deleted the user",
+    "error": "An error occurred",
+    "errorDelete": "An error occurred while deleting",
+    "statusLock": "locked",
+    "statusUnlock": "unlocked"
+  }
+}

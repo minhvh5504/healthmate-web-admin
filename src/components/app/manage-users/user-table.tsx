@@ -12,7 +12,7 @@ import { UserTableDialogs } from "./user-table-dialogs";
 import { UserDetailModal } from "./user-detail-modal";
 
 export function UserTable() {
-  const { t } = useTranslation(["dashboard", "common"]);
+  const { t } = useTranslation(["dashboard", "common", "user"]);
 
   const [page, setPage] = useState(1);
   const limit = 10;
@@ -35,12 +35,16 @@ export function UserTable() {
       const result = await toggleUserStatus(selectedUser.id);
       if (result.ok) {
         toast.success(
-          `Đã ${selectedUser.isActive ? "khóa" : "mở khóa"} người dùng thành công`,
+          t("user:toast.toggleStatusSuccess", {
+            status: selectedUser.isActive
+              ? t("user:toast.statusLock")
+              : t("user:toast.statusUnlock"),
+          }),
         );
       }
     } catch (error) {
       console.log(error);
-      toast.error("Có lỗi xảy ra");
+      toast.error(t("user:toast.error"));
     } finally {
       setSelectedUser(null);
     }
@@ -51,11 +55,11 @@ export function UserTable() {
     try {
       const result = await deleteUser(userToDelete.id);
       if (result.ok) {
-        toast.success("Đã xóa người dùng thành công");
+        toast.success(t("user:toast.deleteSuccess"));
       }
     } catch (error) {
       console.log(error);
-      toast.error("Có lỗi xảy ra khi xóa");
+      toast.error(t("user:toast.errorDelete"));
     } finally {
       setUserToDelete(null);
     }
