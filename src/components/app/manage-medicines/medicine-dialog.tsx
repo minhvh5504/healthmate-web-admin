@@ -23,6 +23,13 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Medication } from "@/services/medication-service";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
@@ -34,7 +41,6 @@ const medicineSchema = z.object({
   dosage: z.string().min(1, "Dosage is required (e.g. 500mg)"),
   manufacturer: z.string().optional(),
   description: z.string().optional(),
-  imageUrl: z.string().url("Invalid URL").or(z.literal("")).optional(),
 });
 
 type MedicineFormValues = z.infer<typeof medicineSchema>;
@@ -45,6 +51,20 @@ interface MedicineDialogProps {
   medicine?: Medication | null;
   onSubmit: (values: Partial<Medication>) => Promise<{ ok: boolean }>;
 }
+
+const MEDICINE_FORMS = [
+  "Tablet",
+  "Capsule",
+  "Syrup",
+  "Injection",
+  "Cream",
+  "Ointment",
+  "Gel",
+  "Drops",
+  "Powder",
+  "Inhaler",
+  "Other",
+];
 
 export function MedicineDialog({
   open,
@@ -63,7 +83,6 @@ export function MedicineDialog({
       dosage: "",
       manufacturer: "",
       description: "",
-      imageUrl: "",
     },
   });
 
@@ -77,7 +96,6 @@ export function MedicineDialog({
           dosage: medicine.dosage || "",
           manufacturer: medicine.manufacturer || "",
           description: medicine.description || "",
-          imageUrl: medicine.imageUrl || "",
         });
       } else {
         form.reset({
@@ -87,7 +105,6 @@ export function MedicineDialog({
           dosage: "",
           manufacturer: "",
           description: "",
-          imageUrl: "",
         });
       }
     }
@@ -106,7 +123,9 @@ export function MedicineDialog({
       }
     } catch (error) {
       console.error(error);
-      toast.error(isEditing ? "Error updating medicine" : "Error creating medicine");
+      toast.error(
+        isEditing ? "Error updating medicine" : "Error creating medicine",
+      );
     }
   };
 
@@ -114,7 +133,10 @@ export function MedicineDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[550px] max-h-[90vh] overflow-y-auto rounded-3xl border-none shadow-2xl">
+      <DialogContent
+        className="sm:max-w-[550px] max-h-[90vh] overflow-y-auto rounded-3xl border-none shadow-2xl"
+        onOpenAutoFocus={(e) => e.preventDefault()}
+      >
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-slate-800">
             {isEditing ? "Edit Medicine" : "Add New Medicine"}
@@ -180,13 +202,39 @@ export function MedicineDialog({
                     <FormLabel className="text-slate-700 font-semibold">
                       Form <span className="text-red-500">*</span>
                     </FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="e.g. Tablet, Syrup"
-                        className="rounded-xl bg-slate-50 border-slate-200 h-11 focus-visible:ring-[#4318FF] transition-all"
-                        {...field}
-                      />
-                    </FormControl>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      value={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger className="w-full rounded-xl bg-slate-50 border-slate-200 !h-11 focus:ring-[#4318FF] transition-all">
+                          <SelectValue placeholder="Select form" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent className="rounded-xl border-slate-100 shadow-xl">
+                        {/* Ensure existing value is shown even if not in list */}
+                        {field.value &&
+                          !MEDICINE_FORMS.includes(field.value) && (
+                            <SelectItem
+                              key={field.value}
+                              value={field.value}
+                              className="rounded-lg focus:bg-blue-50 focus:text-blue-600 cursor-pointer"
+                            >
+                              {field.value}
+                            </SelectItem>
+                          )}
+                        {MEDICINE_FORMS.map((form) => (
+                          <SelectItem
+                            key={form}
+                            value={form}
+                            className="rounded-lg focus:bg-blue-50 focus:text-blue-600 cursor-pointer"
+                          >
+                            {form}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -223,26 +271,6 @@ export function MedicineDialog({
                   <FormControl>
                     <Input
                       placeholder="e.g. Pfizer"
-                      className="rounded-xl bg-slate-50 border-slate-200 h-11 focus-visible:ring-[#4318FF] transition-all"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="imageUrl"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-slate-700 font-semibold">
-                    Image URL
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="https://example.com/image.jpg"
                       className="rounded-xl bg-slate-50 border-slate-200 h-11 focus-visible:ring-[#4318FF] transition-all"
                       {...field}
                     />
