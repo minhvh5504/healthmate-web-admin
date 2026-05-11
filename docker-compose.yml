@@ -1,10 +1,30 @@
+version: "3.8"
+
 services:
-  web-admin:
-    build: .
-    container_name: healthmate-admin
-    ports:
-      - "3001:3000"
+  admin:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: healthmate_admin_v2
+    restart: unless-stopped
     env_file:
       - .env
+    ports:
+      - "3001:3000"
+    networks:
+      - healthmate_network
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "wget --no-verbose --tries=1 --spider http://localhost:3000/ || exit 1",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
 
-# docker compose -p healthmate-admin up -d
+networks:
+  healthmate_network:
+    name: healthmate_network
+    driver: bridge
