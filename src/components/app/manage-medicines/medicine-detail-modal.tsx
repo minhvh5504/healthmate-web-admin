@@ -23,7 +23,6 @@ import { medicationService, Medication } from "@/services/medication-service";
 import { medicationQueryKeys } from "@/hooks/use-medications";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
 
 interface MedicineDetailModalProps {
   medicine: Medication | null;
@@ -64,16 +63,7 @@ export function MedicineDetailModal({
           <div className="absolute -bottom-16 left-8 flex items-end gap-6">
             <div className="relative">
               <div className="h-32 w-32 rounded-3xl bg-white border-4 border-white shadow-2xl flex items-center justify-center overflow-hidden">
-                {medicine?.imageUrl ? (
-                  <Image
-                    src={medicine.imageUrl}
-                    alt={medicine.name}
-                    fill
-                    className="object-cover"
-                  />
-                ) : (
-                  <Pill size={64} className="text-blue-100" />
-                )}
+                <Pill size={64} className="text-blue-500/20" />
               </div>
             </div>
             <div className="pb-4">
