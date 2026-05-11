@@ -1,0 +1,36 @@
+name: Deploy Healthmate Web Admin
+
+on:
+  push:
+    branches: [production]
+
+jobs:
+  deploy:
+    name: Deploy to VPS
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: 22
+          script: |
+            set -e
+
+            echo "📦 Pulling latest code..."
+            cd ~/var/healthmate/healthmate-web-admin
+            git fetch origin
+            git checkout production
+            git pull origin production
+
+            echo "🐳 Rebuilding containers..."
+            docker compose -p healthmate-admin down
+            docker compose -p healthmate-admin up -d --build
+
+            echo "🧹 Pruning unused images..."
+            docker image prune -f
+
+            echo "✅ Deployment complete!"
