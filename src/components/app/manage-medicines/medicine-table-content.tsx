@@ -12,13 +12,13 @@ import {
 import { Button } from "@/components/ui/button";
 import { Eye, Edit, Trash2, Pill } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useTranslation } from "react-i18next";
 import { Medication } from "@/services/medication-service";
 
 interface MedicineTableContentProps {
   medications: Medication[];
   isLoading: boolean;
   isError: boolean;
-  noDataText: string;
   onView: (medication: Medication) => void;
   onEdit: (medication: Medication) => void;
   onDelete: (medication: Medication) => void;
@@ -29,34 +29,34 @@ export function MedicineTableContent({
   medications,
   isLoading,
   isError,
-  noDataText,
   onView,
   onEdit,
   onDelete,
   startIndex,
 }: MedicineTableContentProps) {
+  const { t } = useTranslation(["medicine", "common"]);
   return (
     <div className="overflow-x-auto px-2">
       <Table className="min-w-full">
         <TableHeader>
           <TableRow className="border-0 hover:bg-transparent h-14">
             <TableHead className="font-bold text-slate-400 text-[11px] uppercase tracking-wider text-center w-[60px]">
-              STT
+              {t("medicine:stt")}
             </TableHead>
             <TableHead className="font-bold text-slate-400 text-[11px] uppercase tracking-wider">
-              Medicine Name
+              {t("medicine:name")}
             </TableHead>
             <TableHead className="font-bold text-slate-400 text-[11px] uppercase tracking-wider text-center">
-              Form
+              {t("medicine:form")}
             </TableHead>
             <TableHead className="font-bold text-slate-400 text-[11px] uppercase tracking-wider text-center">
-              Dosage
+              {t("medicine:dosage")}
             </TableHead>
             <TableHead className="font-bold text-slate-400 text-[11px] uppercase tracking-wider text-center">
-              Manufacturer
+              {t("medicine:manufacturer")}
             </TableHead>
             <TableHead className="font-bold text-slate-400 text-[11px] uppercase tracking-wider text-center w-[140px]">
-              Actions
+              {t("medicine:actions")}
             </TableHead>
           </TableRow>
         </TableHeader>
@@ -90,7 +90,7 @@ export function MedicineTableContent({
                 colSpan={6}
                 className="text-center py-12 text-slate-400 italic"
               >
-                {noDataText}
+                {t("common:noData")}
               </TableCell>
             </TableRow>
           ) : (
@@ -119,7 +119,11 @@ export function MedicineTableContent({
                 </TableCell>
                 <TableCell className="text-center">
                   <p className="text-[14px] font-bold text-slate-600">
-                    {medicine.form || "N/A"}
+                    {medicine.form
+                      ? t(`medicine:forms.${medicine.form.toLowerCase()}`, {
+                          defaultValue: medicine.form,
+                        })
+                      : "N/A"}
                   </p>
                 </TableCell>
                 <TableCell className="text-center">

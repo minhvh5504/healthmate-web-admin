@@ -3,6 +3,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface MedicineTablePaginationProps {
   currentPage: number;
@@ -15,6 +16,7 @@ export function MedicineTablePagination({
   totalPages,
   onPageChange,
 }: MedicineTablePaginationProps) {
+  const { t } = useTranslation(["common"]);
   const getPageNumbers = () => {
     const pages = [];
     const maxVisible = 5;
@@ -34,9 +36,9 @@ export function MedicineTablePagination({
   return (
     <div className="px-6 py-4 flex items-center justify-between mt-2">
       <p className="text-xs text-slate-400">
-        Trang{" "}
+        {t("common:actions.pagination.page")}{" "}
         <span className="text-slate-700 font-bold ml-1">{currentPage}</span>{" "}
-        trong tổng số {totalPages || 1}
+        {t("common:actions.pagination.of")} {totalPages || 1}
       </p>
       <div className="flex items-center gap-1">
         <Button

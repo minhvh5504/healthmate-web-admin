@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Medication } from "@/services/medication-service";
 import { MedicineDialog } from "./medicine-dialog";
+import { useTranslation, Trans } from "react-i18next";
 
 interface MedicineTableDialogsProps {
   medicineToDelete: Medication | null;
@@ -37,6 +38,7 @@ export function MedicineTableDialogs({
   onConfirmAdd,
   onConfirmEdit,
 }: MedicineTableDialogsProps) {
+  const { t } = useTranslation(["medicine", "common"]);
   return (
     <>
       {/* Delete Dialog */}
@@ -47,23 +49,25 @@ export function MedicineTableDialogs({
         <AlertDialogContent className="rounded-3xl border-none shadow-2xl">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-xl font-bold text-slate-800">
-              Confirm Delete Medicine
+              {t("medicine:delete.title")}
             </AlertDialogTitle>
             <AlertDialogDescription className="text-slate-500">
-              This action <b>cannot be undone</b>. Are you sure you want to
-              permanently delete <b>{medicineToDelete?.name}</b> from the
-              system?
+              <Trans
+                i18nKey="medicine:delete.description"
+                values={{ name: medicineToDelete?.name }}
+                components={{ b: <b /> }}
+              />
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter className="gap-2 pt-4">
             <AlertDialogCancel className="rounded-xl border-slate-100 text-slate-500 font-bold hover:bg-slate-50">
-              Cancel
+              {t("common:actions.cancel")}
             </AlertDialogCancel>
             <AlertDialogAction
               onClick={onConfirmDelete}
               className="rounded-xl font-bold text-white shadow-lg transition-all bg-red-600 hover:bg-red-700 shadow-red-100"
             >
-              Permanently Delete
+              {t("medicine:delete.action")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

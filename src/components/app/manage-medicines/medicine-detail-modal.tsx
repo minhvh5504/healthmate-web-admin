@@ -1,12 +1,7 @@
 "use client";
 
 import React from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
 import {
   Pill,
@@ -23,6 +18,7 @@ import { medicationService, Medication } from "@/services/medication-service";
 import { medicationQueryKeys } from "@/hooks/use-medications";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
 
 interface MedicineDetailModalProps {
   medicine: Medication | null;
@@ -35,6 +31,7 @@ export function MedicineDetailModal({
   isOpen,
   onClose,
 }: MedicineDetailModalProps) {
+  const { t } = useTranslation(["medicine", "common"]);
   // 1. Fetch deep detail when modal opens
   const { data: medicineDetail, isLoading } = useQuery({
     queryKey: medicationQueryKeys.detail(medicine?.id || ""),
@@ -58,37 +55,31 @@ export function MedicineDetailModal({
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="sm:max-w-[600px] p-0 overflow-hidden border-none shadow-2xl rounded-3xl">
-        {/* Header with Background Gradient */}
-        <div className="relative h-40 bg-gradient-to-r from-blue-600 to-indigo-700">
-          <div className="absolute -bottom-16 left-8 flex items-end gap-6">
+        <div className="relative bg-gradient-to-r from-[#4318FF] to-[#868CFF] px-8 pt-12 pb-16">
+          <div className="flex items-end gap-6">
             <div className="relative">
               <div className="h-32 w-32 rounded-3xl bg-white border-4 border-white shadow-2xl flex items-center justify-center overflow-hidden">
-                <Pill size={64} className="text-blue-500/20" />
+                <Pill size={64} className="text-[#4318FF]/20" />
               </div>
             </div>
-            <div className="pb-4">
-              <DialogTitle className="text-2xl font-black text-white drop-shadow-sm">
+            <div className="pb-2 flex-1">
+              <DialogTitle className="text-2xl font-black text-white drop-shadow-sm mb-2">
                 {medicine?.name}
               </DialogTitle>
-            </div>
-          </div>
-        </div>
-
-        <div className="pt-20 pb-8 px-8">
-          <DialogHeader className="flex flex-row items-center justify-between space-y-0">
-            <div className="space-y-1">
-              <div className="flex items-center gap-2 text-slate-400 font-medium text-sm">
-                <FlaskConical size={14} className="text-blue-500" />
+              <div className="flex items-center gap-2 text-blue-50 font-medium text-sm">
+                <FlaskConical size={14} className="text-blue-200" />
                 <span className="italic">{medicine?.genericName || "N/A"}</span>
-                <span>•</span>
-                <span className="text-xs uppercase tracking-wider font-bold">
+                <span className="opacity-40">•</span>
+                <span className="text-[10px] uppercase tracking-widest font-bold opacity-80">
                   ID: {medicine?.id.slice(-8)}
                 </span>
               </div>
             </div>
-          </DialogHeader>
+          </div>
+        </div>
 
-          <Separator className="my-6 bg-slate-100" />
+        <div className="pb-8 px-8">
+          <Separator className="mb-8 bg-slate-100" />
 
           {isLoading ? (
             <div className="space-y-6">
@@ -107,22 +98,29 @@ export function MedicineDetailModal({
               <section>
                 <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2">
                   <Info size={14} />
-                  Thông tin cơ bản
+                  {t("medicine:info")}
                 </h3>
                 <div className="grid grid-cols-2 gap-y-6 gap-x-8">
                   <InfoItem
                     icon={<Pill size={16} />}
-                    label="Dạng bào chế"
-                    value={medicineDetail?.form || medicine?.form}
+                    label={t("medicine:form")}
+                    value={(() => {
+                      const val = medicineDetail?.form || medicine?.form;
+                      return val
+                        ? t(`medicine:forms.${val.toLowerCase()}`, {
+                            defaultValue: val,
+                          })
+                        : undefined;
+                    })()}
                   />
                   <InfoItem
                     icon={<Activity size={16} />}
-                    label="Liều lượng"
+                    label={t("medicine:dosage")}
                     value={medicineDetail?.dosage || medicine?.dosage}
                   />
                   <InfoItem
                     icon={<Factory size={16} />}
-                    label="Nhà sản xuất"
+                    label={t("medicine:manufacturer")}
                     value={
                       medicineDetail?.manufacturer || medicine?.manufacturer
                     }
@@ -135,10 +133,11 @@ export function MedicineDetailModal({
               <section>
                 <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2">
                   <FileText size={14} />
-                  Mô tả & Chỉ định
+                  {t("medicine:description")}
                 </h3>
                 <div className="bg-slate-50 rounded-2xl p-4 text-sm text-slate-600 leading-relaxed min-h-[80px]">
-                  {medicineDetail?.description || "Không có mô tả chi tiết."}
+                  {medicineDetail?.description ||
+                    t("medicine:messages.noDescription")}
                 </div>
               </section>
 
@@ -146,17 +145,17 @@ export function MedicineDetailModal({
               <section>
                 <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2">
                   <Calendar size={14} />
-                  Dữ liệu hệ thống
+                  {t("medicine:systemData")}
                 </h3>
                 <div className="grid grid-cols-2 gap-y-6 gap-x-8">
                   <InfoItem
                     icon={<Calendar size={16} />}
-                    label="Ngày thêm"
+                    label={t("medicine:createdAt")}
                     value={formatDate(medicine?.createdAt)}
                   />
                   <InfoItem
                     icon={<Clock size={16} />}
-                    label="Cập nhật cuối"
+                    label={t("medicine:updatedAt")}
                     value={formatDate(
                       medicineDetail?.updatedAt || medicine?.createdAt,
                     )}
@@ -184,7 +183,7 @@ function InfoItem({
 }) {
   return (
     <div className={cn("space-y-1.5 group", className)}>
-      <div className="flex items-center gap-2 text-slate-400 group-hover:text-blue-600 transition-colors">
+      <div className="flex items-center gap-2 text-slate-400 group-hover:text-[#4318FF] transition-colors">
         {icon}
         <span className="text-[11px] font-bold uppercase tracking-wider">
           {label}

@@ -11,6 +11,11 @@
     "delete": "Xóa",
     "edit": "Sửa",
     "back": "Quay lại",
-    "continue": "Tiếp tục"
+    "continue": "Tiếp tục",
+    "saving": "Đang lưu",
+    "pagination": {
+      "page": "Trang",
+      "of": "trong tổng số"
+    }
   }
 }

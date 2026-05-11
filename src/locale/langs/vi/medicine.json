@@ -1,0 +1,60 @@
+{
+  "title": "Quản lý thuốc",
+  "addMedicine": "Thêm thuốc mới",
+  "addMedicineDescription": "Điền thông tin để thêm một loại thuốc mới vào danh mục.",
+  "editMedicine": "Chỉnh sửa thuốc",
+  "editMedicineDescription": "Cập nhật thông tin chi tiết của loại thuốc này trong hệ thống.",
+  "name": "Tên thuốc",
+  "genericName": "Tên hoạt chất",
+  "form": "Hình dạng",
+  "dosage": "Liều lượng",
+  "manufacturer": "Nhà sản xuất",
+  "description": "Mô tả & Chỉ định",
+  "info": "Thông tin cơ bản",
+  "systemData": "Dữ liệu hệ thống",
+  "createdAt": "Ngày thêm",
+  "updatedAt": "Cập nhật cuối",
+  "actions": "Thao tác",
+  "saveChanges": "Lưu thay đổi",
+  "createMedicine": "Thêm thuốc",
+  "cancel": "Hủy",
+  "stt": "STT",
+  "placeholders": {
+    "search": "Tìm kiếm thuốc...",
+    "name": "VD: Paracetamol",
+    "genericName": "VD: Acetaminophen",
+    "form": "Chọn hình dạng",
+    "dosage": "VD: 500mg",
+    "manufacturer": "VD: Pfizer",
+    "description": "Nhập mô tả, công dụng, tác dụng phụ..."
+  },
+  "delete": {
+    "title": "Xác nhận xóa thuốc",
+    "description": "Hành động này <b>không thể hoàn tác</b>. Bạn có chắc chắn muốn xóa vĩnh viễn thuốc <b>{{name}}</b> khỏi hệ thống?",
+    "action": "Xóa vĩnh viễn"
+  },
+  "messages": {
+    "confirmDelete": "Bạn có chắc chắn muốn xóa thuốc này không? Hành động này không thể hoàn tác.",
+    "successAdd": "Thêm thuốc thành công",
+    "successUpdate": "Cập nhật thuốc thành công",
+    "successDelete": "Xóa thuốc thành công",
+    "errorAdd": "Lỗi khi thêm thuốc",
+    "errorUpdate": "Lỗi khi cập nhật thuốc",
+    "errorDelete": "Lỗi khi xóa thuốc",
+    "noDescription": "Không có mô tả chi tiết."
+  },
+  "forms": {
+    "tablet": "Viên nén",
+    "capsule": "Viên nang",
+    "syrup": "Siro",
+    "injection": "Thuốc tiêm",
+    "cream": "Kem",
+    "ointment": "Thuốc mỡ",
+    "gel": "Gel",
+    "drops": "Thuốc nhỏ",
+    "liquid": "Dung dịch",
+    "powder": "Thuốc bột",
+    "inhaler": "Thuốc hít",
+    "other": "Khác"
+  }
+}
