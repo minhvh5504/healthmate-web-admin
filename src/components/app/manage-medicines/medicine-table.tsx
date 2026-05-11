@@ -13,7 +13,7 @@ import { MedicineTableDialogs } from "./medicine-table-dialogs";
 import { MedicineDetailModal } from "./medicine-detail-modal";
 
 export function MedicineTable() {
-  const { t } = useTranslation(["dashboard", "common"]);
+  const { t } = useTranslation(["dashboard", "common", "medicine"]);
 
   const [page, setPage] = useState(1);
   const limit = 10;
@@ -45,11 +45,11 @@ export function MedicineTable() {
     try {
       const result = await deleteMedication(medicineToDelete.id);
       if (result.ok) {
-        toast.success("Deleted medicine successfully");
+        toast.success(t("medicine:messages.successDelete"));
       }
     } catch (error) {
       console.log(error);
-      toast.error("Error deleting medicine");
+      toast.error(t("medicine:messages.errorDelete"));
     } finally {
       setMedicineToDelete(null);
     }
@@ -79,7 +79,6 @@ export function MedicineTable() {
         medications={medications}
         isLoading={isLoading}
         isError={isError}
-        noDataText={t("common:noData")}
         startIndex={(page - 1) * limit}
         onView={setMedicineToView}
         onEdit={setMedicineToEdit}

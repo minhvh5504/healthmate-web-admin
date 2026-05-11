@@ -33,6 +33,7 @@ import {
 import { Medication } from "@/services/medication-service";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const medicineSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -53,17 +54,18 @@ interface MedicineDialogProps {
 }
 
 const MEDICINE_FORMS = [
-  "Tablet",
-  "Capsule",
-  "Syrup",
-  "Injection",
-  "Cream",
-  "Ointment",
-  "Gel",
-  "Drops",
-  "Powder",
-  "Inhaler",
-  "Other",
+  "tablet",
+  "capsule",
+  "syrup",
+  "injection",
+  "cream",
+  "ointment",
+  "gel",
+  "drops",
+  "liquid",
+  "powder",
+  "inhaler",
+  "other",
 ];
 
 export function MedicineDialog({
@@ -72,6 +74,7 @@ export function MedicineDialog({
   medicine,
   onSubmit,
 }: MedicineDialogProps) {
+  const { t } = useTranslation(["medicine", "common"]);
   const isEditing = !!medicine;
 
   const form = useForm<MedicineFormValues>({
@@ -116,15 +119,17 @@ export function MedicineDialog({
       if (result.ok) {
         toast.success(
           isEditing
-            ? "Updated medicine successfully"
-            : "Created medicine successfully",
+            ? t("medicine:messages.successUpdate")
+            : t("medicine:messages.successAdd"),
         );
         onOpenChange(false);
       }
     } catch (error) {
       console.error(error);
       toast.error(
-        isEditing ? "Error updating medicine" : "Error creating medicine",
+        isEditing
+          ? t("medicine:messages.errorUpdate")
+          : t("medicine:messages.errorAdd"),
       );
     }
   };
@@ -139,12 +144,12 @@ export function MedicineDialog({
       >
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-slate-800">
-            {isEditing ? "Edit Medicine" : "Add New Medicine"}
+            {isEditing ? t("medicine:editMedicine") : t("medicine:addMedicine")}
           </DialogTitle>
           <DialogDescription className="text-slate-500 text-base">
             {isEditing
-              ? "Update the details of this medication in the system."
-              : "Fill in the information to add a new medication to the catalog."}
+              ? t("medicine:editMedicineDescription")
+              : t("medicine:addMedicineDescription")}
           </DialogDescription>
         </DialogHeader>
 
@@ -159,11 +164,11 @@ export function MedicineDialog({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-slate-700 font-semibold">
-                    Medicine Name <span className="text-red-500">*</span>
+                    {t("medicine:name")} <span className="text-red-500">*</span>
                   </FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="e.g. Paracetamol"
+                      placeholder={t("medicine:placeholders.name")}
                       className="rounded-xl bg-slate-50 border-slate-200 h-11 focus-visible:ring-[#4318FF] transition-all"
                       {...field}
                     />
@@ -179,11 +184,11 @@ export function MedicineDialog({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-slate-700 font-semibold">
-                    Generic Name
+                    {t("medicine:genericName")}
                   </FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="e.g. Acetaminophen"
+                      placeholder={t("medicine:placeholders.genericName")}
                       className="rounded-xl bg-slate-50 border-slate-200 h-11 focus-visible:ring-[#4318FF] transition-all"
                       {...field}
                     />
@@ -200,7 +205,8 @@ export function MedicineDialog({
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-slate-700 font-semibold">
-                      Form <span className="text-red-500">*</span>
+                      {t("medicine:form")}{" "}
+                      <span className="text-red-500">*</span>
                     </FormLabel>
                     <Select
                       onValueChange={field.onChange}
@@ -209,7 +215,9 @@ export function MedicineDialog({
                     >
                       <FormControl>
                         <SelectTrigger className="w-full rounded-xl bg-slate-50 border-slate-200 !h-11 focus:ring-[#4318FF] transition-all">
-                          <SelectValue placeholder="Select form" />
+                          <SelectValue
+                            placeholder={t("medicine:placeholders.form")}
+                          />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent className="rounded-xl border-slate-100 shadow-xl">
@@ -230,7 +238,7 @@ export function MedicineDialog({
                             value={form}
                             className="rounded-lg focus:bg-blue-50 focus:text-blue-600 cursor-pointer"
                           >
-                            {form}
+                            {t(`medicine:forms.${form}`)}
                           </SelectItem>
                         ))}
                       </SelectContent>
@@ -245,11 +253,12 @@ export function MedicineDialog({
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-slate-700 font-semibold">
-                      Dosage <span className="text-red-500">*</span>
+                      {t("medicine:dosage")}{" "}
+                      <span className="text-red-500">*</span>
                     </FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="e.g. 500mg"
+                        placeholder={t("medicine:placeholders.dosage")}
                         className="rounded-xl bg-slate-50 border-slate-200 h-11 focus-visible:ring-[#4318FF] transition-all"
                         {...field}
                       />
@@ -266,11 +275,11 @@ export function MedicineDialog({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-slate-700 font-semibold">
-                    Manufacturer
+                    {t("medicine:manufacturer")}
                   </FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="e.g. Pfizer"
+                      placeholder={t("medicine:placeholders.manufacturer")}
                       className="rounded-xl bg-slate-50 border-slate-200 h-11 focus-visible:ring-[#4318FF] transition-all"
                       {...field}
                     />
@@ -286,11 +295,11 @@ export function MedicineDialog({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-slate-700 font-semibold">
-                    Description
+                    {t("medicine:description")}
                   </FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Enter medicine description, uses, side effects..."
+                      placeholder={t("medicine:placeholders.description")}
                       className="rounded-xl bg-slate-50 border-slate-200 min-h-[100px] focus-visible:ring-[#4318FF] transition-all"
                       {...field}
                     />
@@ -308,7 +317,7 @@ export function MedicineDialog({
                 onClick={() => onOpenChange(false)}
                 disabled={isLoading}
               >
-                Cancel
+                {t("medicine:cancel")}
               </Button>
               <Button
                 type="submit"
@@ -318,12 +327,12 @@ export function MedicineDialog({
                 {isLoading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Saving...
+                    {t("common:saving")}...
                   </>
                 ) : isEditing ? (
-                  "Save Changes"
+                  t("medicine:saveChanges")
                 ) : (
-                  "Create Medicine"
+                  t("medicine:createMedicine")
                 )}
               </Button>
             </DialogFooter>

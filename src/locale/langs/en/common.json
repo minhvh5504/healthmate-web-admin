@@ -11,6 +11,11 @@
     "delete": "Delete",
     "edit": "Edit",
     "back": "Back",
-    "continue": "Continue"
+    "continue": "Continue",
+    "saving": "Saving",
+    "pagination": {
+      "page": "Page",
+      "of": "of"
+    }
   }
 }
