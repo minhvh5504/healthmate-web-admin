@@ -3,6 +3,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: https://api.healthmate.dev/api
     container_name: healthmate_admin_v2
     restart: unless-stopped
     env_file:
@@ -16,7 +18,6 @@ services:
       timeout: 10s
       retries: 3
       start_period: 40s
-
 networks:
   healthmate_network:
     name: healthmate_network
