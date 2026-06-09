@@ -3,6 +3,8 @@
 import { useLanguage } from "@/hooks/use-language";
 import { Globe } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useEffect, useState } from "react";
+import Loading from "@/components/custom/custom-loading";
 
 type AuthLayoutProps = {
   children: React.ReactNode;
@@ -15,6 +17,12 @@ type AuthLayoutProps = {
 export default function AuthLayout({ children }: AuthLayoutProps) {
   const { currentLanguage, changeLanguage } = useLanguage();
   const { t } = useTranslation("auth");
+  const [initialLoading, setInitialLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setInitialLoading(false), 600);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleToggleLanguage = () => {
     const nextLang = currentLanguage?.code === "vi" ? "en" : "vi";
@@ -23,6 +31,9 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
 
   return (
     <main className="relative min-h-svh w-full grid place-items-center p-4 overflow-hidden bg-white">
+      {/* Initial page load — replaced the card fade-in animation */}
+      <Loading loading={initialLoading} />
+
       {/* Background container to isolate decorative elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {/* Primary Background */}
@@ -46,7 +57,7 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
       {/* Language Header - Top Right */}
       <div
         onClick={handleToggleLanguage}
-        className="absolute top-8 right-8 z-20 flex items-center gap-1.5 text-slate-400 hover:text-slate-800 transition-colors cursor-pointer group select-none"
+        className={`absolute top-8 right-8 z-20 flex items-center gap-1.5 text-slate-400 hover:text-slate-800 transition-all cursor-pointer group select-none ${initialLoading ? "invisible opacity-0" : "visible opacity-100"}`}
       >
         <Globe
           size={16}
@@ -57,8 +68,8 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
         </span>
       </div>
 
-      {/* Main Card Container - Centered and Premium */}
-      <div className="relative z-10 w-full max-w-[460px] animate-in fade-in zoom-in duration-500">
+      {/* Main Card Container - hidden while loading to prevent icon flash */}
+      <div className={`relative z-10 w-full max-w-[460px] transition-opacity duration-300 ${initialLoading ? "invisible opacity-0" : "visible opacity-100"}`}>
         <div className="bg-white/90 backdrop-blur-xl rounded-[48px] shadow-[0_32px_64px_-16px_rgba(31,38,135,0.08)] border border-white/50 p-10 sm:p-14">
           {children}
         </div>

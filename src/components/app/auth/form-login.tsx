@@ -84,15 +84,14 @@ export default function LoginForm() {
         <div className="mb-10 flex w-full justify-center">
           <div className="relative">
             <div className="absolute inset-0 bg-blue-500/20 blur-2xl rounded-full" />
-            <div className="relative bg-white p-4 rounded-[28px] shadow-2xl shadow-blue-500/10 border border-slate-100 animate-in fade-in zoom-in duration-1000">
-              <Image
-                src="/logo.svg"
-                alt="Health Mate Logo"
-                width={48}
-                height={48}
-                priority
-              />
-            </div>
+            <Image
+              className="relative"
+              src="/logo.svg"
+              alt="Health Mate Logo"
+              width={64}
+              height={64}
+              priority
+            />
           </div>
         </div>
 
