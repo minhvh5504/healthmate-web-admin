@@ -2,10 +2,11 @@
 
 import { cn } from '@/lib/utils';
 import { cva, type VariantProps } from 'class-variance-authority';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 const loadingVariant = cva(
-  "z-[100001] flex items-center justify-center bg-[rgba(53,53,53,0.3)] backdrop-blur-sm transition duration-300",
+  "z-[100001] flex items-center justify-center transition duration-300",
   {
     variants: {
       variant: {
@@ -25,9 +26,21 @@ export interface PropsLoading extends VariantProps<typeof loadingVariant> {
 }
 
 const Loading: React.FC<PropsLoading> = ({ loading, variant, className }) => {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   if (!loading) return null;
 
-  return (
+  const isFullscreen = !variant || variant === 'fullscreen';
+
+  // Fullscreen: wait until client is mounted before rendering via portal
+  // This prevents the "render in-place → jump to center" flash
+  if (isFullscreen && !mounted) return null;
+
+  const content = (
     <div className={cn(loadingVariant({ variant }), className)}>
       <div className="flex space-x-2">
         {/* Dot 1 */}
@@ -61,6 +74,13 @@ const Loading: React.FC<PropsLoading> = ({ loading, variant, className }) => {
       `}</style>
     </div>
   );
+
+  // Portal to document.body bypasses all backdrop-filter/transform stacking contexts
+  if (isFullscreen) {
+    return createPortal(content, document.body);
+  }
+
+  return content;
 };
 
 export default Loading;

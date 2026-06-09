@@ -2,35 +2,20 @@
 
 import * as React from 'react';
 import { cn } from '@/lib/utils';
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuLabel,
-} from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Skeleton } from '@/components/ui/skeleton';
-import { LogOut } from 'lucide-react';
-import { signOut, useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import { useUserProfile } from '@/hooks/use-user';
 import { useTranslation } from 'react-i18next';
 
 type Props = {
   className?: string;
-  side?: 'top' | 'right' | 'bottom' | 'left';
-  align?: 'start' | 'center' | 'end';
 };
 
 export default function ProfileDropdownRow({
   className,
-  side = 'bottom',
-  align = 'start',
 }: Props) {
   const { t } = useTranslation(['dashboard']);
-  const router = useRouter();
   const { data: session } = useSession();
   const { data: userProfile, isLoading: isProfileLoading } = useUserProfile();
 
