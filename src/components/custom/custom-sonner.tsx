@@ -45,7 +45,7 @@ export const customSonner = ({
 
   toast.custom(
     () => (
-      <div className="flex items-start gap-3 p-3 bg-white dark:bg-neutral-900 rounded-md shadow-lg border border-neutral-200 dark:border-neutral-700 max-w-[380px]">
+      <div className="flex items-start gap-3 p-3 w-full bg-white dark:bg-neutral-900 rounded-md shadow-lg border border-neutral-200 dark:border-neutral-700">
         <div className="mt-1">{icon}</div>
 
         <div className={`flex-1 ${color}`}>
