@@ -23,7 +23,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
           </LanguageProvider>
         </QueryProvider>
       </AuthProvider>
-      <Toaster position="top-center" duration={3000} richColors />
+      <Toaster position="top-center" duration={3000} richColors toastOptions={{ style: { width: '380px' } }} />
     </>
   );
 }

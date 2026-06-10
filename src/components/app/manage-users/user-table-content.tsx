@@ -10,7 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Eye, Ban, Check, Trash2, UserCircle, Shield } from "lucide-react";
+import { Eye, Ban, LockOpen, Trash2, UserCircle, Shield } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
@@ -188,7 +188,7 @@ export function UserTableContent({
                       )}
                       onClick={() => onToggleStatus(user)}
                     >
-                      {user.isActive ? <Ban size={18} /> : <Check size={18} />}
+                      {user.isActive ? <Ban size={18} /> : <LockOpen size={18} />}
                     </Button>
                     <Button
                       size="icon"
