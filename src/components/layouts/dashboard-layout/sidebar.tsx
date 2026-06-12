@@ -24,9 +24,8 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { LayoutDashboard, Power, Users } from "lucide-react";
+import { LayoutDashboard, Pill, Power, Users } from "lucide-react";
 import type { ElementType } from "react";
-import MedicineIcon from "../../../../public/medicine.svg";
 import { cn } from "@/lib/utils";
 import { useCallback, useEffect, useState } from "react";
 import { signOut } from "next-auth/react";
@@ -75,7 +74,7 @@ export default function AppSidebar() {
         defaultValue: "Manage Medicine",
       }),
       href: "/manage-medicines",
-      icon: MedicineIcon,
+      icon: Pill,
     },
   ];
 

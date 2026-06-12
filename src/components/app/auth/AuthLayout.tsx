@@ -1,10 +1,23 @@
 "use client";
 
 import { useLanguage } from "@/hooks/use-language";
-import { Globe } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import Loading from "@/components/custom/custom-loading";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { IMAGE_URLS } from "@/constants/urls";
+import { Check, ChevronDown } from "lucide-react";
+import Image from "next/image";
+
+const LANGUAGES = [
+  { code: "vi", label: "Tiếng Việt", flag: IMAGE_URLS.FLAGS.VI },
+  { code: "en", label: "English",    flag: IMAGE_URLS.FLAGS.EN },
+];
 
 type AuthLayoutProps = {
   children: React.ReactNode;
@@ -24,10 +37,8 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
     return () => clearTimeout(timer);
   }, []);
 
-  const handleToggleLanguage = () => {
-    const nextLang = currentLanguage?.code === "vi" ? "en" : "vi";
-    changeLanguage(nextLang);
-  };
+  const currentCode = currentLanguage?.code || "vi";
+  const currentFlag = LANGUAGES.find((l) => l.code === currentCode)?.flag ?? IMAGE_URLS.FLAGS.VI;
 
   return (
     <main className="relative min-h-svh w-full grid place-items-center p-4 overflow-hidden bg-white">
@@ -54,18 +65,58 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
         />
       </div>
 
-      {/* Language Header - Top Right */}
-      <div
-        onClick={handleToggleLanguage}
-        className={`absolute top-8 right-8 z-20 flex items-center gap-1.5 text-slate-400 hover:text-slate-800 transition-all cursor-pointer group select-none ${initialLoading ? "invisible opacity-0" : "visible opacity-100"}`}
-      >
-        <Globe
-          size={16}
-          className="transition-transform duration-300 group-hover:rotate-12"
-        />
-        <span className="text-xs font-bold uppercase tracking-widest">
-          {currentLanguage?.code || "VI"}
-        </span>
+      {/* Language Dropdown - Top Right */}
+      <div className={`absolute top-6 right-8 z-20 transition-all ${initialLoading ? "invisible opacity-0" : "visible opacity-100"}`}>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button
+              className="group flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-slate-500 bg-white/70 backdrop-blur-sm border border-white/60 shadow-sm transition-all hover:bg-white hover:text-slate-800 select-none cursor-pointer outline-none"
+              aria-label="Select language"
+            >
+              <Image
+                src={currentFlag}
+                alt={currentCode}
+                width={22}
+                height={16}
+                className="rounded-sm object-cover shadow-sm"
+              />
+              <span className="text-xs font-bold uppercase tracking-widest">
+                {currentCode}
+              </span>
+              <ChevronDown
+                size={13}
+                className="text-slate-400 transition-transform duration-200 group-data-[state=open]:rotate-180"
+              />
+            </button>
+          </DropdownMenuTrigger>
+
+          <DropdownMenuContent align="end" className="w-44 p-1.5 rounded-xl shadow-lg">
+            {LANGUAGES.map((lang) => {
+              const isActive = lang.code === currentCode;
+              return (
+                <DropdownMenuItem
+                  key={lang.code}
+                  onClick={() => changeLanguage(lang.code)}
+                  className={`flex items-center gap-3 rounded-lg px-3 py-2.5 cursor-pointer transition-colors ${
+                    isActive
+                      ? "bg-blue-50 text-blue-600 font-semibold"
+                      : "text-slate-600 hover:bg-slate-50"
+                  }`}
+                >
+                  <Image
+                    src={lang.flag}
+                    alt={lang.label}
+                    width={22}
+                    height={16}
+                    className="rounded-sm object-cover shadow-sm flex-shrink-0"
+                  />
+                  <span className="text-sm flex-1">{lang.label}</span>
+                  {isActive && <Check size={14} className="text-blue-500" />}
+                </DropdownMenuItem>
+              );
+            })}
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
 
       {/* Main Card Container - hidden while loading to prevent icon flash */}
