@@ -59,7 +59,9 @@ export function MedicineDetailModal({
           <div className="flex items-end gap-6">
             <div className="relative">
               <div className="h-32 w-32 rounded-3xl bg-white border-4 border-white shadow-2xl flex items-center justify-center overflow-hidden">
-                <Pill size={64} className="text-[#4318FF]/20" />
+                <div className="w-20 h-20 rounded-2xl bg-blue-50 flex items-center justify-center text-blue-500 flex-shrink-0">
+                  <Pill size={40} />
+                </div>
               </div>
             </div>
             <div className="pb-2 flex-1">
