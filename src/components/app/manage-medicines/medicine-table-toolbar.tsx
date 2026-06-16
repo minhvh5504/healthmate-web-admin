@@ -36,7 +36,7 @@ export function MedicineTableToolbar({
           </div>
           <Button
             onClick={onAddClick}
-            className="bg-[#4318FF] hover:bg-[#3311cc] text-white rounded-xl px-6 h-10 font-bold shadow-md shadow-blue-200 transition-all flex items-center gap-2 whitespace-nowrap"
+            className="bg-[#007BFF] hover:bg-[#0069d9] text-white rounded-xl px-6 h-10 font-bold shadow-md shadow-blue-200 transition-all flex items-center gap-2 whitespace-nowrap"
           >
             <Plus size={18} />
             <span className="hidden sm:inline">{t("medicine:addMedicine")}</span>

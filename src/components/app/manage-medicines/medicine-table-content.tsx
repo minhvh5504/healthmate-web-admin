@@ -10,7 +10,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Eye, Edit, Trash2, Pill } from "lucide-react";
+import { Eye, Edit, Trash2 } from "lucide-react";
+import { MedicineIcon } from "@/components/icons/medicine-icon";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useTranslation } from "react-i18next";
 import { Medication } from "@/services/medication-service";
@@ -105,14 +106,11 @@ export function MedicineTableContent({
                 <TableCell>
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-500 flex-shrink-0">
-                      <Pill size={18} />
+                      <MedicineIcon size={18} />
                     </div>
                     <div>
                       <p className="text-[14px] font-bold text-slate-700 leading-tight">
                         {medicine.name}
-                      </p>
-                      <p className="text-[12px] text-slate-400 italic leading-tight">
-                        {medicine.genericName || "N/A"}
                       </p>
                     </div>
                   </div>

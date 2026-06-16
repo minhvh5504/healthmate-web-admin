@@ -132,7 +132,7 @@ export default function LoginForm() {
                         id="username"
                         type="text"
                         placeholder={t("auth:login.username")}
-                        className="h-14 pl-12 pr-4 rounded-2xl border-slate-300 bg-slate-50/50 focus:bg-white focus:border-[#4318FF] focus:ring-1 focus:ring-[#4318FF]/20 transition-all text-[15px] placeholder:text-slate-300 autofill:shadow-[0_0_0_1000px_white_inset]"
+                        className="h-14 pl-12 pr-4 rounded-2xl border-slate-300 bg-slate-50/50 focus:bg-white focus:border-[#007BFF] focus:ring-1 focus:ring-[#007BFF]/20 transition-all text-[15px] placeholder:text-slate-300 autofill:shadow-[0_0_0_1000px_white_inset]"
                         {...field}
                       />
                     </div>
@@ -164,7 +164,7 @@ export default function LoginForm() {
                         id="password"
                         type={showPw ? "text" : "password"}
                         placeholder="••••••••"
-                        className="h-14 pl-12 pr-12 rounded-2xl border-slate-300 bg-slate-50/50 focus:bg-white focus:border-[#4318FF] focus:ring-1 focus:ring-[#4318FF]/20 transition-all text-[15px] placeholder:text-slate-300 autofill:shadow-[0_0_0_1000px_white_inset]"
+                        className="h-14 pl-12 pr-12 rounded-2xl border-slate-300 bg-slate-50/50 focus:bg-white focus:border-[#007BFF] focus:ring-1 focus:ring-[#007BFF]/20 transition-all text-[15px] placeholder:text-slate-300 autofill:shadow-[0_0_0_1000px_white_inset]"
                         {...field}
                       />
                       <button
@@ -186,7 +186,7 @@ export default function LoginForm() {
               <Button
                 variant="default"
                 type="submit"
-                className="h-14 w-full rounded-2xl bg-[#4318FF] text-[16px] font-bold text-white hover:bg-[#3311CC] active:scale-[0.98] transition-all shadow-lg shadow-blue-500/20"
+                className="h-14 w-full rounded-2xl bg-[#007BFF] text-[16px] font-bold text-white hover:bg-[#0069d9] active:scale-[0.98] transition-all shadow-lg shadow-blue-500/20"
                 disabled={form.formState.isSubmitting || isLoading}
               >
                 {t("auth:login.loginButton")}

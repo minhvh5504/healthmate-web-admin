@@ -4,15 +4,14 @@ import React from "react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
 import {
-  Pill,
   Factory,
   FileText,
   Calendar,
   Clock,
-  FlaskConical,
   Activity,
   Info,
 } from "lucide-react";
+import { MedicineIcon } from "@/components/icons/medicine-icon";
 import { useQuery } from "@tanstack/react-query";
 import { medicationService, Medication } from "@/services/medication-service";
 import { medicationQueryKeys } from "@/hooks/use-medications";
@@ -60,7 +59,7 @@ export function MedicineDetailModal({
             <div className="relative">
               <div className="h-32 w-32 rounded-3xl bg-white border-4 border-white shadow-2xl flex items-center justify-center overflow-hidden">
                 <div className="w-20 h-20 rounded-2xl bg-blue-50 flex items-center justify-center text-blue-500 flex-shrink-0">
-                  <Pill size={40} />
+                  <MedicineIcon size={40} />
                 </div>
               </div>
             </div>
@@ -69,9 +68,6 @@ export function MedicineDetailModal({
                 {medicine?.name}
               </DialogTitle>
               <div className="flex items-center gap-2 text-blue-50 font-medium text-sm">
-                <FlaskConical size={14} className="text-blue-200" />
-                <span className="italic">{medicine?.genericName || "N/A"}</span>
-                <span className="opacity-40">•</span>
                 <span className="text-[10px] uppercase tracking-widest font-bold opacity-80">
                   ID: {medicine?.id.slice(-8)}
                 </span>
@@ -104,7 +100,7 @@ export function MedicineDetailModal({
                 </h3>
                 <div className="grid grid-cols-2 gap-y-6 gap-x-8">
                   <InfoItem
-                    icon={<Pill size={16} />}
+                    icon={<MedicineIcon size={16} />}
                     label={t("medicine:form")}
                     value={(() => {
                       const val = medicineDetail?.form || medicine?.form;

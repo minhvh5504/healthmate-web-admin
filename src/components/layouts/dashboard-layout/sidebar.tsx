@@ -132,8 +132,8 @@ export default function AppSidebar() {
                       className={cn(
                         "group rounded-2xl py-6 text-[15px] font-medium transition-all duration-200 group-data-[collapsible=icon]:size-11! group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:p-0!",
                         isActive
-                          ? "bg-[#007BFFB2] text-white hover:bg-[#007BFFB2] hover:text-white"
-                          : "text-slate-500 hover:bg-slate-50 hover:text-[#007BFFB2]",
+                          ? "bg-[#007BFF] text-white hover:bg-[#007BFF] hover:text-white"
+                          : "text-slate-500 hover:bg-slate-50 hover:text-[#007BFF]",
                       )}
                     >
                       <Link

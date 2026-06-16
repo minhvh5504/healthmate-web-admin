@@ -1,0 +1,9 @@
+<svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="300" rx="20" fill="#F8FAFC"/>
+  <circle cx="200" cy="120" r="60" fill="#FEE2E2"/>
+  <path d="M170 130C175 120 185 115 200 115C215 115 225 120 230 130" stroke="#EF4444" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="180" cy="100" r="5" fill="#EF4444"/>
+  <circle cx="220" cy="100" r="5" fill="#EF4444"/>
+  <text x="200" y="220" text-anchor="middle" font-family="sans-serif" font-size="24" font-weight="bold" fill="#EF4444">500</text>
+  <text x="200" y="250" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#64748B">Internal Server Error</text>
+</svg>

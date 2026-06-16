@@ -6,11 +6,18 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
   images: {
-    domains: ['pub-ac63ada298264e7c8b5061c251fd0c3a.r2.dev'],
     remotePatterns: [
       {
         protocol: 'https',
+        hostname: 'pub-ac63ada298264e7c8b5061c251fd0c3a.r2.dev',
+      },
+      {
+        protocol: 'https',
         hostname: 'lh3.googleusercontent.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
       },
     ],
   },
