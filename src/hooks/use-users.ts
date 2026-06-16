@@ -35,16 +35,17 @@ export function useUsers(page = 1, limit = 10, status = "all") {
     queryFn: async () => {
         const res = await userProfileService.getAllUsers(page, limit, status);
         // Map backend structure to frontend interface
+        const usersArray = Array.isArray(res?.users) ? res.users : [];
         return {
             ...res,
-            users: res.users.map((u: any) => ({
+            users: usersArray.map((u: any) => ({
                 id: u.id,
                 email: u.email,
                 fullName: u.profile?.fullName || "N/A",
                 avatarUrl: u.avatarUrl,
-                role: u.role,
-                isActive: u.isActive,
-                createdAt: u.createdAt,
+                role: u.role || "user",
+                isActive: u.isActive ?? true,
+                createdAt: u.createdAt || "",
             }))
         };
     },

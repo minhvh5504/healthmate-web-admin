@@ -37,7 +37,6 @@ import { useTranslation } from "react-i18next";
 
 const medicineSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
-  genericName: z.string().optional(),
   form: z.string().min(1, "Form is required (e.g. Tablet, Syrup)"),
   dosage: z.string().min(1, "Dosage is required (e.g. 500mg)"),
   manufacturer: z.string().optional(),
@@ -81,7 +80,6 @@ export function MedicineDialog({
     resolver: zodResolver(medicineSchema),
     defaultValues: {
       name: "",
-      genericName: "",
       form: "",
       dosage: "",
       manufacturer: "",
@@ -94,7 +92,6 @@ export function MedicineDialog({
       if (medicine) {
         form.reset({
           name: medicine.name || "",
-          genericName: medicine.genericName || "",
           form: medicine.form || "",
           dosage: medicine.dosage || "",
           manufacturer: medicine.manufacturer || "",
@@ -103,7 +100,6 @@ export function MedicineDialog({
       } else {
         form.reset({
           name: "",
-          genericName: "",
           form: "",
           dosage: "",
           manufacturer: "",
@@ -169,27 +165,7 @@ export function MedicineDialog({
                   <FormControl>
                     <Input
                       placeholder={t("medicine:placeholders.name")}
-                      className="rounded-xl bg-slate-50 border-slate-200 h-11 focus-visible:ring-[#4318FF] transition-all"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="genericName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-slate-700 font-semibold">
-                    {t("medicine:genericName")}
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder={t("medicine:placeholders.genericName")}
-                      className="rounded-xl bg-slate-50 border-slate-200 h-11 focus-visible:ring-[#4318FF] transition-all"
+                      className="rounded-xl bg-slate-50 border-slate-200 h-11 focus-visible:ring-[#007BFF] transition-all"
                       {...field}
                     />
                   </FormControl>
@@ -214,7 +190,7 @@ export function MedicineDialog({
                       value={field.value}
                     >
                       <FormControl>
-                        <SelectTrigger className="w-full rounded-xl bg-slate-50 border-slate-200 !h-11 focus:ring-[#4318FF] transition-all">
+                        <SelectTrigger className="w-full rounded-xl bg-slate-50 border-slate-200 !h-11 focus:ring-[#007BFF] transition-all">
                           <SelectValue
                             placeholder={t("medicine:placeholders.form")}
                           />
@@ -259,7 +235,7 @@ export function MedicineDialog({
                     <FormControl>
                       <Input
                         placeholder={t("medicine:placeholders.dosage")}
-                        className="rounded-xl bg-slate-50 border-slate-200 h-11 focus-visible:ring-[#4318FF] transition-all"
+                        className="rounded-xl bg-slate-50 border-slate-200 h-11 focus-visible:ring-[#007BFF] transition-all"
                         {...field}
                       />
                     </FormControl>
@@ -280,7 +256,7 @@ export function MedicineDialog({
                   <FormControl>
                     <Input
                       placeholder={t("medicine:placeholders.manufacturer")}
-                      className="rounded-xl bg-slate-50 border-slate-200 h-11 focus-visible:ring-[#4318FF] transition-all"
+                      className="rounded-xl bg-slate-50 border-slate-200 h-11 focus-visible:ring-[#007BFF] transition-all"
                       {...field}
                     />
                   </FormControl>
@@ -300,7 +276,7 @@ export function MedicineDialog({
                   <FormControl>
                     <Textarea
                       placeholder={t("medicine:placeholders.description")}
-                      className="rounded-xl bg-slate-50 border-slate-200 min-h-[100px] focus-visible:ring-[#4318FF] transition-all"
+                      className="rounded-xl bg-slate-50 border-slate-200 min-h-[100px] focus-visible:ring-[#007BFF] transition-all"
                       {...field}
                     />
                   </FormControl>
@@ -322,7 +298,7 @@ export function MedicineDialog({
               <Button
                 type="submit"
                 disabled={isLoading}
-                className="bg-[#4318FF] hover:bg-[#3311cc] text-white rounded-xl h-11 px-8 font-bold shadow-lg shadow-blue-100 transition-all min-w-[140px]"
+                className="bg-[#007BFF] hover:bg-[#0056b3] text-white rounded-xl h-11 px-8 font-bold shadow-lg shadow-blue-100 transition-all min-w-[140px]"
               >
                 {isLoading ? (
                   <>

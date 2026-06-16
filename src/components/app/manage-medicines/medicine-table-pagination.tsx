@@ -44,7 +44,7 @@ export function MedicineTablePagination({
         <Button
           variant="ghost"
           size="icon"
-          className="h-8 w-8 rounded-lg text-gray-400 hover:text-[#4318FF] hover:bg-[#4318FF]/10 disabled:opacity-50"
+          className="h-8 w-8 rounded-lg text-gray-400 hover:text-[#007BFF] hover:bg-[#007BFF]/10 disabled:opacity-50"
           disabled={currentPage === 1}
           onClick={() => onPageChange(currentPage - 1)}
         >
@@ -57,8 +57,8 @@ export function MedicineTablePagination({
             variant={currentPage === page ? "default" : "ghost"}
             className={
               currentPage === page
-                ? "h-8 w-8 rounded-lg bg-[#4318FF] text-white text-xs font-bold shadow-md shadow-blue-200"
-                : "h-8 w-8 rounded-lg text-gray-400 hover:text-[#4318FF] hover:bg-[#4318FF]/10 text-xs font-bold"
+                ? "h-8 w-8 rounded-lg bg-[#007BFF] text-white text-xs font-bold shadow-md shadow-blue-200"
+                : "h-8 w-8 rounded-lg text-gray-400 hover:text-[#007BFF] hover:bg-[#007BFF]/10 text-xs font-bold"
             }
             onClick={() => onPageChange(page)}
           >
@@ -69,7 +69,7 @@ export function MedicineTablePagination({
         <Button
           variant="ghost"
           size="icon"
-          className="h-8 w-8 rounded-lg text-gray-400 hover:text-[#4318FF] hover:bg-[#4318FF]/10 disabled:opacity-50"
+          className="h-8 w-8 rounded-lg text-gray-400 hover:text-[#007BFF] hover:bg-[#007BFF]/10 disabled:opacity-50"
           disabled={currentPage >= totalPages}
           onClick={() => onPageChange(currentPage + 1)}
         >

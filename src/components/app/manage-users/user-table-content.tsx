@@ -39,11 +39,15 @@ export function UserTableContent({
   startIndex,
 }: UserTableContentProps) {
   const { t, i18n } = useTranslation("user");
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString(
+  const formatDate = (dateString?: string) => {
+    if (!dateString) return "N/A";
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return "N/A";
+    return date.toLocaleDateString(
       i18n.language === "vi" ? "vi-VN" : "en-US",
     );
   };
+
 
   const getStatusColor = (user: User) => {
     if (!user.isActive) return "bg-red-400";
