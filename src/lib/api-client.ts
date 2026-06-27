@@ -19,6 +19,35 @@ type Pending = {
 
 let isRefreshing = false;
 let failedQueue: Pending[] = [];
+let sessionCache: Session | null = null;
+let sessionCacheExpiresAt = 0;
+let sessionRequest: Promise<Session | null> | null = null;
+
+const SESSION_CACHE_TTL = 30 * 1000;
+
+const getCachedSession = async (force = false): Promise<Session | null> => {
+  const now = Date.now();
+
+  if (!force && sessionCache && sessionCacheExpiresAt > now) {
+    return sessionCache;
+  }
+
+  if (!force && sessionRequest) {
+    return sessionRequest;
+  }
+
+  sessionRequest = getSession()
+    .then((session) => {
+      sessionCache = (session as Session | null) ?? null;
+      sessionCacheExpiresAt = Date.now() + SESSION_CACHE_TTL;
+      return sessionCache;
+    })
+    .finally(() => {
+      sessionRequest = null;
+    });
+
+  return sessionRequest;
+};
 
 /** Process queue */
 const processQueue = (error: Error | null, token: string | null = null) => {
@@ -47,9 +76,9 @@ const axiosInstance: AxiosInstance = axios.create({
 /** Request: attach Bearer token from NextAuth session */
 axiosInstance.interceptors.request.use(
   async (config: InternalAxiosRequestConfig) => {
-    const session = await getSession();
+    const session = await getCachedSession();
 
-    const token = (session as Session | null)?.accessToken;
+    const token = session?.accessToken;
     config.headers = config.headers ?? {};
     if (token) config.headers.Authorization = `Bearer ${token}`;
     return config;
@@ -98,14 +127,15 @@ axiosInstance.interceptors.response.use(
       isRefreshing = true;
 
       // NextAuth will automatically run jwt() -> refreshAccessToken() if expired
-      const newSession = await getSession();
-      const newToken = (newSession as Session | null)?.accessToken || null;
-      console.log("newToken", newSession);
+      const newSession = await getCachedSession(true);
+      const newToken = newSession?.accessToken || null;
 
       // Notify the queue
       processQueue(null, newToken);
 
       if (!newToken) {
+        sessionCache = null;
+        sessionCacheExpiresAt = 0;
         await signOut({ callbackUrl: "/login" });
         return Promise.reject(error);
       }
@@ -119,6 +149,8 @@ axiosInstance.interceptors.response.use(
     } catch (e) {
       console.log("e", e);
       processQueue(new Error("Refresh failed"), null);
+      sessionCache = null;
+      sessionCacheExpiresAt = 0;
       await signOut({ callbackUrl: "/login" });
       return Promise.reject(e);
     } finally {
