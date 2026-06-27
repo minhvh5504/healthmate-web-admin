@@ -12,7 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Eye, Ban, LockOpen, Trash2, UserCircle, Shield } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
-import Image from "next/image";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 import { User } from "@/hooks/use-users";
 import { useTranslation } from "react-i18next";
@@ -43,11 +43,8 @@ export function UserTableContent({
     if (!dateString) return "N/A";
     const date = new Date(dateString);
     if (isNaN(date.getTime())) return "N/A";
-    return date.toLocaleDateString(
-      i18n.language === "vi" ? "vi-VN" : "en-US",
-    );
+    return date.toLocaleDateString(i18n.language === "vi" ? "vi-VN" : "en-US");
   };
-
 
   const getStatusColor = (user: User) => {
     if (!user.isActive) return "bg-red-400";
@@ -123,20 +120,20 @@ export function UserTableContent({
                 </TableCell>
                 <TableCell>
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center overflow-hidden border border-slate-200">
-                      {user.avatarUrl ? (
-                        <div className="relative w-full h-full">
-                          <Image
-                            src={user.avatarUrl}
-                            alt={user.fullName}
-                            fill
-                            className="object-cover"
-                          />
-                        </div>
-                      ) : (
-                        <UserCircle className="text-slate-400" size={24} />
-                      )}
-                    </div>
+                    <Avatar className="w-10 h-10 bg-slate-100 border border-slate-200">
+                      <AvatarImage
+                        src={user.avatarUrl}
+                        alt={user.fullName}
+                        className="object-cover"
+                      />
+                      <AvatarFallback className="bg-slate-100">
+                        {user.fullName && user.fullName !== "N/A" ? (
+                          user.fullName.substring(0, 2).toUpperCase()
+                        ) : (
+                          <UserCircle className="text-slate-400" size={24} />
+                        )}
+                      </AvatarFallback>
+                    </Avatar>
                     <div>
                       <p className="text-[14px] font-bold text-slate-700">
                         {user.fullName}
@@ -192,7 +189,11 @@ export function UserTableContent({
                       )}
                       onClick={() => onToggleStatus(user)}
                     >
-                      {user.isActive ? <Ban size={18} /> : <LockOpen size={18} />}
+                      {user.isActive ? (
+                        <Ban size={18} />
+                      ) : (
+                        <LockOpen size={18} />
+                      )}
                     </Button>
                     <Button
                       size="icon"
