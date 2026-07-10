@@ -27,7 +27,7 @@ export function useLanguage() {
     const newPathname = pathname.replace(/^\/[a-z]{2}/, `/${langCode}`);
     router.push(newPathname);
 
-    document.cookie = `NEXT_LOCALE=${langCode}; path=/; max-age=31536000`;
+    document.cookie = `NEXT_LOCALE=${langCode}; path=/; max-age=31536000; SameSite=Lax`;
   };
 
   return {
