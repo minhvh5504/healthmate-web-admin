@@ -20,6 +20,8 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
     if (i18nInstance.language !== langCode) {
       i18nInstance.changeLanguage(langCode);
     }
+
+    document.cookie = `NEXT_LOCALE=${langCode}; path=/; max-age=31536000; SameSite=Lax`;
   }, [pathname]);
 
   return <I18nextProvider i18n={i18nInstance}>{children}</I18nextProvider>;
