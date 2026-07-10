@@ -1,22 +1,21 @@
-# ---------- Stage 1: Dependencies ----------
+# Stage 1: Dependencies (full deps for Next build)
 FROM node:20-alpine AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY package.json yarn.lock ./
-RUN --mount=type=cache,target=/root/.yarn \
-    yarn install --frozen-lockfile
+RUN yarn install --frozen-lockfile && yarn cache clean
 
-# ---------- Stage 2: Builder ----------
+# Stage 2: Builder
 FROM node:20-alpine AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 ARG NEXT_PUBLIC_API_URL
 ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
-ENV NODE_OPTIONS="--max-old-space-size=1536"
+ENV NEXT_TELEMETRY_DISABLED=1
 RUN yarn build
 
-# ---------- Stage 3: Runtime ----------
+# Stage 3: Production runtime
 FROM node:20-alpine AS production
 RUN apk add --no-cache dumb-init
 WORKDIR /app
