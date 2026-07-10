@@ -45,6 +45,11 @@ const normalizePath = (path: string) => {
   return "/" + parts.join("/");
 };
 
+const getCurrentLocale = (path: string | null) => {
+  const locale = path?.split("/").filter(Boolean)[0];
+  return locale === "en" || locale === "vi" ? locale : "vi";
+};
+
 const matchPath = (pathname: string | null, href: string) => {
   if (!pathname) return false;
   const normalized = normalizePath(pathname);
@@ -55,6 +60,7 @@ export default function AppSidebar() {
   const { t } = useTranslation(["auth", "dashboard"]);
   const pathname = usePathname();
   const router = useRouter();
+  const currentLocale = getCurrentLocale(pathname);
 
   const items: Item[] = [
     {
@@ -87,9 +93,9 @@ export default function AppSidebar() {
   const handleNavigate = useCallback(
     (href: string) => {
       setPendingHref(href);
-      router.push(href);
+      router.push(`/${currentLocale}${href}`);
     },
-    [router],
+    [currentLocale, router],
   );
 
   return (
@@ -99,7 +105,7 @@ export default function AppSidebar() {
     >
       <SidebarHeader className="flex items-center justify-center py-4 group-data-[collapsible=icon]:h-16 group-data-[collapsible=icon]:px-2">
         <Link
-          href="/dashboard"
+          href={`/${currentLocale}/dashboard`}
           className="group flex items-center justify-center gap-3 rounded-lg px-2 group-data-[collapsible=icon]:size-11 group-data-[collapsible=icon]:rounded-xl group-data-[collapsible=icon]:bg-[#007BFF]/10 group-data-[collapsible=icon]:px-0"
           aria-label="HealthMate Dashboard"
         >
