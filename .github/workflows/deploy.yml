@@ -27,9 +27,6 @@ jobs:
             git pull origin production
 
             echo "🐳 Rebuilding containers..."
-            export DOCKER_BUILDKIT=1
-            export COMPOSE_DOCKER_CLI_BUILD=1
-            docker compose -p healthmate-admin down
             docker compose -p healthmate-admin up -d --build
 
             echo "🧹 Pruning unused images..."
